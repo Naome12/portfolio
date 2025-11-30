@@ -8,42 +8,42 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: 0 0% 99%;
+    --foreground: 220 13% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 220 13% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 220 13% 20%;
 
-    --primary: 200 100% 50%;
+    --primary: 200 84% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --secondary: 220 14% 92%;
+    --secondary-foreground: 220 13% 25%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 45%;
+    --muted: 220 10% 88%;
+    --muted-foreground: 220 10% 50%;
 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --accent: 220 14% 92%;
+    --accent-foreground: 220 13% 25%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 200 100% 50%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 200 84% 45%;
 
-    /* Custom portfolio colors */
-    --tech-blue: 200 100% 50%;
-    --tech-purple: 270 95% 75%;
-    --tech-cyan: 180 100% 70%;
-    --gradient-primary: linear-gradient(135deg, hsl(200 100% 50%), hsl(270 95% 75%));
-    --gradient-secondary: linear-gradient(135deg, hsl(0 0% 100%), hsl(240 4.8% 95.9%));
-    --glow-blue: 0 0 40px hsl(200 100% 50% / 0.3);
-    --glow-purple: 0 0 40px hsl(270 95% 75% / 0.3);
+    /* Custom portfolio colors - calm palette */
+    --tech-blue: 200 70% 48%;
+    --tech-purple: 260 50% 60%;
+    --tech-cyan: 190 60% 55%;
+    --gradient-primary: linear-gradient(135deg, hsl(200 70% 48%), hsl(260 50% 60%));
+    --gradient-secondary: linear-gradient(135deg, hsl(200 60% 52%), hsl(220 50% 58%));
+    --glow-blue: 0 0 30px hsl(200 70% 48% / 0.15);
+    --glow-purple: 0 0 30px hsl(260 50% 60% / 0.15);
 
     --radius: 0.5rem;
 
@@ -58,33 +58,33 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 200 100% 50%;
+    --background: 220 30% 13%;
+    --foreground: 200 20% 88%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 200 100% 50%;
+    --card: 220 30% 13%;
+    --card-foreground: 200 20% 88%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 200 100% 50%;
+    --popover: 220 30% 13%;
+    --popover-foreground: 200 20% 88%;
 
-    --primary: 200 100% 50%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 200 70% 52%;
+    --primary-foreground: 220 30% 13%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 200 100% 50%;
+    --secondary: 220 20% 22%;
+    --secondary-foreground: 200 20% 85%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 20% 22%;
+    --muted-foreground: 200 15% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 200 100% 50%;
+    --accent: 220 20% 22%;
+    --accent-foreground: 200 20% 85%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 200 100% 50%;
+    --destructive-foreground: 200 70% 52%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 220 20% 22%;
+    --input: 220 20% 22%;
+    --ring: 200 70% 52%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -101,7 +101,141 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    cursor: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSI0IiBmaWxsPSJjdXJyZW50Q29sb3IiIG9wYWNpdHk9IjAuNiIvPjwvc3ZnPg==") 12 12, auto;
   }
+
+  a, button {
+    cursor: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSI2IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+PC9zdmc+") 12 12, auto;
+  }
+
+  /* Smooth scroll behavior */
+  @supports (scroll-behavior: smooth) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+/* Scroll-triggered animations */
+@keyframes scroll-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll-fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll-fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scroll-fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes subtle-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes gentle-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px hsla(200, 100%, 50%, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px hsla(200, 100%, 50%, 0.35);
+  }
+}
+
+.scroll-fade-in-up {
+  animation: scroll-fade-in-up 0.8s ease-out forwards;
+}
+
+.scroll-fade-in-down {
+  animation: scroll-fade-in-down 0.8s ease-out forwards;
+}
+
+.scroll-fade-in-left {
+  animation: scroll-fade-in-left 0.8s ease-out forwards;
+}
+
+.scroll-fade-in-right {
+  animation: scroll-fade-in-right 0.8s ease-out forwards;
+}
+
+.subtle-float {
+  animation: subtle-float 4s ease-in-out infinite;
+}
+
+.gentle-glow {
+  animation: gentle-glow-pulse 3s ease-in-out infinite;
+}
+
+/* Toast animations */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+}
+
+[data-state="open"] {
+  animation: toast-in 0.3s cubic-bezier(0.32, 0.72, 0.3, 1);
+}
+
+[data-state="closed"] {
+  animation: toast-out 0.3s cubic-bezier(0.32, 0.72, 0.3, 1);
 }

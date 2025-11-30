@@ -2,8 +2,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github, Eye } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Projects = () => {
+  const { ref: sectionRef, isVisible } = useScrollAnimation();
   const projects = [
     {
       title: "E-Commerce App",
@@ -28,7 +30,7 @@ const Projects = () => {
     {
       title: "Booking System",
       description: "Platform for managing hotel room bookings, schedules, and guest reservations.",
-      technologies: ["Python", "Nmap", "Flask", "SQLite", "Metasploit", "Wireshark"],
+      technologies: ["Python", "FastAPI", "SQLite", "React", "PostgreSQL"],
       category: "Full Stack",
       image: "https://images.unsplash.com/photo-1649433391719-2e784576d044?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       github: "https://github.com/Naome12/Booking-app",
@@ -45,13 +47,32 @@ const Projects = () => {
       live: "#",
       featured: false
     },
-
+    {
+      title: "Mediconnect",
+      description: "Healthcare application with Flutter frontend, Node.js backend, and Firebase for real-time data synchronization and authentication.",
+      technologies: ["Flutter", "Node.js", "Firebase"],
+      category: "Full Stack",
+      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=400&fit=crop",
+      github: "https://github.com/Naome12/Mediconnect",
+      live: "#",
+      featured: false
+    },
+    {
+      title: "Aidly",
+      description: "Mobile application with voice features, accessible UI components, and integration with speech-to-text and text-to-speech capabilities.",
+      technologies: ["React Native", "Expo", "NativeWind", "Tailwind CSS", "Voice API"],
+      category: "Full Stack",
+      image: "https://cdn.builder.io/api/v1/image/assets%2F160b886f4f6049a7a81b58c84259efec%2Fe744a9975ee84062a9ab44b0f0e41fef?format=webp&width=800",
+      github: "https://github.com/Naome12/Aidly",
+      live: "#",
+      featured: false
+    }
   ];
 
   const categories = ["All", "Full Stack", "Embedded Systems"];
 
   return (
-    <section id="projects" className="py-20 bg-background">
+    <section id="projects" className="py-20 bg-background" ref={sectionRef}>
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
@@ -113,10 +134,12 @@ const Projects = () => {
                     </div>
                     
                     <div className="flex gap-3">
-                      <Button size="sm" variant="outline" className="flex-1 border-primary/20 text-primary hover:bg-primary/10">
-                        <Github className="w-4 h-4 mr-2" />
-                        Code
-                      </Button>
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex-1">
+                        <Button size="sm" variant="outline" className="flex-1 border-primary/20 text-primary hover:bg-primary/10">
+                          <Github className="w-4 h-4 mr-2" />
+                          Code
+                        </Button>
+                      </a>
                       <Button size="sm" className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground">
                         <ExternalLink className="w-4 h-4 mr-2" />
                         Live Demo
@@ -161,9 +184,11 @@ const Projects = () => {
                       <Button size="sm" variant="ghost" className="flex-1 text-primary hover:bg-primary/10">
                         <Eye className="w-4 h-4" />
                       </Button>
-                      <Button size="sm" variant="ghost" className="flex-1 text-primary hover:bg-primary/10">
-                        <Github className="w-4 h-4" />
-                      </Button>
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex-1">
+                        <Button size="sm" variant="ghost" className="flex-1 text-primary hover:bg-primary/10">
+                          <Github className="w-4 h-4" />
+                        </Button>
+                      </a>
                     </div>
                   </div>
                 </Card>

@@ -100,15 +100,17 @@ const Navigation = () => {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-primary/20 text-primary hover:bg-primary/10"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Resume
-            </Button>
-            <Button 
+            <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf" download>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-primary/20 text-primary hover:bg-primary/10"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Resume
+              </Button>
+            </a>
+            <Button
               size="sm"
               onClick={() => scrollToSection("#contact")}
               className="bg-primary hover:bg-primary/90 text-primary-foreground"
@@ -148,14 +150,16 @@ const Navigation = () => {
 
                 {/* Mobile CTA */}
                 <div className="space-y-4 py-6 border-t border-border">
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-primary/20 text-primary hover:bg-primary/10"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Resume
-                  </Button>
-                  <Button 
+                  <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf" download className="block">
+                    <Button
+                      variant="outline"
+                      className="w-full border-primary/20 text-primary hover:bg-primary/10"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Download Resume
+                    </Button>
+                  </a>
+                  <Button
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                     onClick={() => scrollToSection("#contact")}
                   >

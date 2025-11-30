@@ -1,35 +1,58 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Building, Award } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Experience = () => {
+  const { ref: sectionRef, isVisible } = useScrollAnimation();
   const experiences = [
     {
-      title: "Backend Developer",
-      company: "Mediconnect",
-      period: "2023 - 2024",
+      title: "Mobile Developer & AI Engineer",
+      company: "Aidly",
+      period: "March 2024 – Present",
       description: [
-        "Developed robust and scalable backend systems using Java and Spring Boot framework.",
+        "Built Aidly mobile application using React Native and Expo.",
+        "Designed reusable UI components with Tailwind CSS (via NativeWind) to match custom mockups.",
+        "Integrated voice features (speech-to-text and text-to-speech) to support accessibility and enhance user interaction."
+      ],
+      technologies: ["React Native", "Expo", "Tailwind CSS", "NativeWind", "Voice API", "JavaScript"],
+    },
+    {
+      title: "Backend Web Developer",
+      company: "Mediconnect",
+      period: "November 2023 – March 2025",
+      description: [
+        "Developed robust and scalable backend systems using Java and the Spring Boot framework.",
         "Designed and implemented RESTful APIs to facilitate communication between frontend and backend components.",
         "Integrated third-party services and libraries to enhance application functionality and performance.",
         "Implemented database schemas and queries using SQL and ORM frameworks like Hibernate.",
-        "Collaborated with frontend developers and QA engineers to ensure seamless integration and efficient testing of backend functionalities.",
+        "Collaborated with frontend developers and QA engineers to ensure seamless integration and efficient testing of backend functionalities."
       ],
-      technologies: [ "Node.js", "PostgreSQL", "AWS", "TypeScript"],
+      technologies: ["Java", "Spring Boot", "PostgreSQL", "REST API", "Hibernate", "SQL"]
     },
     {
-      title: "Mobile Developer",
-      company: "Aidly",
-      period: "2024 - 2025",
+      title: "Software Developer Intern",
+      company: "MIGEPROF, Kigali",
+      period: "August 2025–November 2025",
       description: [
-        "Developed cross-platform mobile applications for smart agriculture IoT systems",
-        "Designed user-friendly interfaces for real-time environmental data visualization",
-        "Integrated mobile apps with Bluetooth and Wi-Fi enabled IoT devices",
-        "Collaborated with embedded engineers to ensure seamless hardware-software interaction"
+        "Contributed to the development of government digital services by assisting in building web applications and internal tools.",
+        "Collaborated with senior developers to integrate frontend and backend components for ministry systems.",
+        "Participated in requirements gathering and system documentation to align technical work with institutional needs.",
+        "Assisted in testing and debugging applications to ensure reliability and compliance with organizational standards."
       ],
-      technologies: ["React Native", "TypeScript", "Firebase", "Bluetooth", "Wi-Fi", "MQTT", "Arduino", "ESP32"]
+      technologies: ["Web Development", "System Integration", "Testing", "Documentation"]
+    },
+    {
+      title: "AI Engineer",
+      company: "LandO'clock",
+      period: "September 1, 2025 - October 31, 2025",
+      description: [
+        "Designed and deployed intelligent AI agents using LangChain, ReAct, RAG, and LLMs for real-world applications.",
+        "Built and optimized scalable backend systems (MCP servers, APIs, data pipelines) ensuring reliable model serving and integration.",
+        "Bridged AI research with production environments, retrieval systems, and agent-based reasoning."
+      ],
+      technologies: ["LangChain", "ReAct", "RAG", "LLMs", "MCP Servers", "APIs", "Python"]
     }
-    
   ];
 
   const education = [
@@ -48,7 +71,7 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-20 bg-background">
+    <section id="experience" className="py-20 bg-background" ref={sectionRef}>
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}

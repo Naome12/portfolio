@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Download, Github, Linkedin, Mail, MapPin } from "lucide-react";
+import { Download, Github, Mail, MapPin } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/hero-bg.jpg";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Hero = () => {
+  const { toast } = useToast();
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden">
       {/* Background Image with Overlay */}
@@ -19,14 +21,14 @@ const Hero = () => {
           {/* Profile Image */}
           <div className="flex-shrink-0 animate-fade-in">
             <div className="relative">
-              <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-primary shadow-glow-blue animate-glow">
-                <img 
-                  src={profilePhoto} 
-                  alt="Tuyishime Naome" 
+              <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-primary/40 shadow-glow-blue gentle-glow">
+                <img
+                  src={profilePhoto}
+                  alt="Tuyishime Naome"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-20 animate-pulse" />
+              <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-5" />
             </div>
           </div>
 
@@ -40,16 +42,16 @@ const Hero = () => {
                 Full Stack Developer
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl">
-                Passionate about creating innovative solutions through full stack development, 
-                embedded systems engineering, and cybersecurity. Building secure, scalable 
+                Passionate about creating innovative solutions through full stack development,
+                mobile engineering, and AI integration. Building secure, scalable
                 applications that make a difference.
               </p>
             </div>
 
             {/* Skills Tags */}
             <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-              {["Full Stack", "Embedded Systems", "Cybersecurity", "React", "Node.js", "Python", "IoT"].map((skill) => (
-                <span 
+              {["Full Stack", "Embedded Systems", "React", "Node.js", "Python", "IoT"].map((skill) => (
+                <span
                   key={skill}
                   className="px-4 py-2 bg-secondary border border-primary/20 rounded-full text-sm font-medium text-primary hover:bg-primary/10 transition-all duration-300"
                 >
@@ -66,25 +68,42 @@ const Hero = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 <Mail className="mr-2" size={18} />
                 Get In Touch
               </Button>
-              <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10">
-                <Download className="mr-2" size={18} />
-                Download CV
-              </Button>
+              <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf" download>
+                <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 w-full">
+                  <Download className="mr-2" size={18} />
+                  Download CV
+                </Button>
+              </a>
             </div>
 
             {/* Social Links */}
             <div className="flex gap-4 justify-center lg:justify-start">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10">
-                <Github size={20} />
-              </Button>
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10">
-                <Linkedin size={20} />
-              </Button>
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10">
+              <a href="https://github.com/Naome12" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10">
+                  <Github size={20} />
+                </Button>
+              </a>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-primary hover:bg-primary/10"
+                onClick={() => {
+                  navigator.clipboard.writeText('tuyishimenaome27@gmail.com');
+                  toast({
+                    title: "Copied!",
+                    description: "Email copied to clipboard."
+                  });
+                }}
+                title="Click to copy email"
+              >
                 <Mail size={20} />
               </Button>
             </div>
@@ -93,9 +112,9 @@ const Hero = () => {
       </div>
 
       {/* Floating Elements */}
-      <div className="absolute top-20 right-20 w-20 h-20 bg-tech-purple/20 rounded-full animate-float" />
-      <div className="absolute bottom-32 left-16 w-16 h-16 bg-tech-cyan/20 rounded-full animate-float" style={{ animationDelay: '1s' }} />
-      <div className="absolute top-1/2 right-10 w-12 h-12 bg-primary/20 rounded-full animate-float" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-20 right-20 w-20 h-20 bg-tech-purple/10 rounded-full subtle-float" />
+      <div className="absolute bottom-32 left-16 w-16 h-16 bg-tech-cyan/10 rounded-full subtle-float" style={{ animationDelay: '1s' }} />
+      <div className="absolute top-1/2 right-10 w-12 h-12 bg-primary/10 rounded-full subtle-float" style={{ animationDelay: '2s' }} />
     </section>
   );
 };

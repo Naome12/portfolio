@@ -1,14 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Heart, Github, Linkedin, Mail, ArrowUp } from "lucide-react";
+import { Github, Mail, ArrowUp } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
+  const { ref: sectionRef, isVisible } = useScrollAnimation();
+  const { toast } = useToast();
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Github, href: "https://github.com/naome-tuyishime", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com/in/naome-tuyishime", label: "LinkedIn" },
-    { icon: Mail, href: "mailto:tuyishimenaome27@gmail.com", label: "Email" }
+    { icon: Github, href: "https://github.com/Naome12", label: "GitHub" },
+    { icon: Mail, href: "mailto:tuyishimenaome27@gmail.com", label: "Email", isEmail: true }
   ];
 
   const quickLinks = [
@@ -31,7 +34,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-secondary/10 border-t border-border">
+    <footer className="bg-secondary/10 border-t border-border" ref={sectionRef}>
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           {/* Main Footer Content */}
@@ -42,8 +45,8 @@ const Footer = () => {
                 Tuyishime Naome
               </h3>
               <p className="text-muted-foreground max-w-md">
-                Full Stack Developer passionate about creating innovative solutions through 
-                web development, embedded systems, and cybersecurity.
+                Full Stack Developer passionate about creating innovative solutions through
+                web development, mobile engineering, and AI integration.
               </p>
               <div className="flex space-x-4">
                 {socialLinks.map((social, index) => (
@@ -51,17 +54,20 @@ const Footer = () => {
                     key={index}
                     variant="ghost"
                     size="icon"
-                    asChild
                     className="text-muted-foreground hover:text-primary hover:bg-primary/10"
+                    onClick={() => {
+                      if (social.isEmail) {
+                        navigator.clipboard.writeText("tuyishimenaome27@gmail.com");
+                        toast({
+                          title: "Copied!",
+                          description: "Email copied to clipboard."
+                        });
+                      } else {
+                        window.open(social.href, "_blank");
+                      }
+                    }}
                   >
-                    <a
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                    >
-                      <social.icon className="w-5 h-5" />
-                    </a>
+                    <social.icon className="w-5 h-5" />
                   </Button>
                 ))}
               </div>
@@ -88,12 +94,18 @@ const Footer = () => {
               <h4 className="text-lg font-semibold text-foreground">Get In Touch</h4>
               <div className="space-y-2 text-muted-foreground">
                 <p>Kigali, Rwanda</p>
-                <a 
-                  href="mailto:naome.tuyishime@gmail.com"
-                  className="block hover:text-primary transition-colors duration-300"
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText("tuyishimenaome27@gmail.com");
+                    toast({
+                      title: "Copied!",
+                      description: "Email copied to clipboard."
+                    });
+                  }}
+                  className="block hover:text-primary transition-colors duration-300 text-left"
                 >
                   tuyishimenaome27@gmail.com
-                </a>
+                </button>
                 <a 
                   href="tel:+250793099772"
                   className="block hover:text-primary transition-colors duration-300"

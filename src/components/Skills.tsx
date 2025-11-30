@@ -1,23 +1,25 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Code2, Database, Server, Smartphone, Shield, Cpu, 
-  Globe, GitBranch, Terminal, Wrench, Cloud, Settings 
+import {
+  Code2, Database, Server, Smartphone, Cpu,
+  Terminal, Wrench
 } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Skills = () => {
+  const { ref: sectionRef, isVisible } = useScrollAnimation();
   const skillCategories = [
     {
       title: "Frontend Development",
       icon: Code2,
       color: "text-tech-blue",
       skills: [
-        { name: "React/Next.js", level: 90 },
-        { name: "TypeScript", level: 85 },
         { name: "HTML/CSS", level: 95 },
+        { name: "React/Next.js", level: 90 },
         { name: "Tailwind CSS", level: 90 },
         { name: "JavaScript", level: 90 },
+        { name: "TypeScript", level: 85 },
         { name: "Vue.js", level: 75 }
       ]
     },
@@ -26,12 +28,12 @@ const Skills = () => {
       icon: Server,
       color: "text-tech-purple",
       skills: [
+        { name: "REST APIs", level: 92 },
+        { name: "Express.js", level: 90 },
         { name: "Node.js", level: 88 },
         { name: "Python", level: 85 },
-        { name: "Express.js", level: 90 },
-        { name: "Django/Flask", level: 80 },
-        { name: "REST APIs", level: 92 },
-        { name: "GraphQL", level: 75 }
+        { name: "Django/FastAPI", level: 85 },
+        { name: "Java/Spring Boot", level: 82 }
       ]
     },
     {
@@ -40,24 +42,24 @@ const Skills = () => {
       color: "text-tech-cyan",
       skills: [
         { name: "PostgreSQL", level: 85 },
+        { name: "Docker", level: 85 },
+        { name: "AWS", level: 80 },
         { name: "MongoDB", level: 80 },
         { name: "Redis", level: 75 },
-        { name: "AWS", level: 80 },
-        { name: "Docker", level: 85 },
         { name: "Kubernetes", level: 70 }
       ]
     },
     {
-      title: "Embedded Systems",
+      title: "Mobile & AI Development",
       icon: Cpu,
       color: "text-orange-400",
       skills: [
-        { name: "C/C++", level: 88 },
-        { name: "Arduino", level: 90 },
-        { name: "Raspberry Pi", level: 85 },
-        { name: "ESP32/ESP8266", level: 80 },
-        { name: "RTOS", level: 75 },
-        { name: "IoT Protocols", level: 82 }
+        { name: "React Native", level: 88 },
+        { name: "Expo", level: 85 },
+        { name: "LLM Integration", level: 82 },
+        { name: "LangChain", level: 80 },
+        { name: "Speech APIs", level: 80 },
+        { name: "RAG Systems", level: 78 }
       ]
     },
     {
@@ -67,10 +69,10 @@ const Skills = () => {
       skills: [
         { name: "Git/GitHub", level: 92 },
         { name: "Linux", level: 85 },
-        { name: "CI/CD", level: 80 },
+        { name: "Agile/Scrum", level: 85 },
         { name: "Testing", level: 82 },
-        { name: "Monitoring", level: 78 },
-        { name: "Agile/Scrum", level: 85 }
+        { name: "CI/CD", level: 80 },
+        { name: "Monitoring", level: 78 }
       ]
     }
   ];
@@ -78,7 +80,7 @@ const Skills = () => {
 
 
   return (
-    <section id="skills" className="py-20 bg-secondary/5">
+    <section id="skills" className="py-20 bg-secondary/5" ref={sectionRef}>
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
@@ -160,24 +162,6 @@ const Skills = () => {
     
           </div>
 
-          {/* Technology Stack Visualization */}
-          <Card className="p-8 bg-card border border-primary/10 animate-fade-in">
-            <h3 className="text-2xl font-bold text-foreground text-center mb-8">Technology Stack</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {[
-                "React", "Node.js", "Python", "PostgreSQL", "Arduino", "AWS",
-                "Docker", "Git", "Linux", "MongoDB", "Express", "TypeScript",
-                "C++", "Firebase", "Redis", "Kubernetes", "Jenkins", "Grafana"
-              ].map((tech, index) => (
-                <Badge 
-                  key={index} 
-                  className="p-3 text-center bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-all duration-300 cursor-default"
-                >
-                  {tech}
-                </Badge>
-              ))}
-            </div>
-          </Card>
         </div>
       </div>
     </section>

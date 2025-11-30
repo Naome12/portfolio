@@ -1,9 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Code, Shield, Cpu, Globe, Award, Users } from "lucide-react";
+import { Code, Smartphone, Cpu, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const About = () => {
+  const { ref: sectionRef, isVisible } = useScrollAnimation();
   const stats = [
     { icon: Code, label: "Projects Completed", value: "15+" },
     { icon: Award, label: "Years Experience", value: "3+" },
@@ -14,28 +16,27 @@ const About = () => {
       icon: Code,
       title: "Full Stack Development",
       description:
-        "Building end-to-end web applications with modern technologies like React, Node.js, Python, and databases.",
+        "Building scalable web applications with modern technologies like React, Node.js, Python, FastAPI, and databases.",
       skills: [
         "React",
         "Node.js",
         "Python",
         "PostgreSQL",
-        "MongoDB",
         "TypeScript",
-        "Next.js",
+        "FastAPI",
       ],
     },
     {
-      icon: Cpu,
-      title: "Embedded Systems",
+      icon: Smartphone,
+      title: "Mobile & AI Development",
       description:
-        "Designing and programming embedded systems for IoT devices, microcontrollers, and real-time applications.",
-      skills: ["C/C++", "Arduino", "Raspberry Pi", "RTOS", "IoT", "Sensors"],
+        "Creating mobile applications with React Native and integrating intelligent AI features using LangChain and LLMs.",
+      skills: ["React Native", "Expo", "LangChain", "LLMs", "RAG", "Voice APIs"],
     },
   ];
 
   return (
-    <section id="about" className="py-20 bg-secondary/5">
+    <section id="about" className="py-20 bg-secondary/5" ref={sectionRef}>
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
@@ -87,26 +88,20 @@ const About = () => {
               <h3 className="text-2xl font-bold text-foreground">My Journey</h3>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  I'm Tuyishime Naome, a dedicated full stack developer with a
-                  passion for technology that spans across web development,
-                  embedded systems, and cybersecurity. My journey began with a
-                  curiosity about how things work and has evolved into a
-                  comprehensive skill set that allows me to tackle complex
-                  challenges.
+                  I'm Tuyishime Naome, a passionate full stack developer with expertise in web development,
+                  mobile engineering, and AI integration. My journey began with curiosity about how technology
+                  shapes our world, and it has evolved into a comprehensive skill set that allows me to create
+                  innovative solutions.
                 </p>
                 <p>
-                  With experience in building scalable web applications,
-                  designing embedded systems for IoT devices, and implementing
-                  robust security measures, I bring a unique perspective to
-                  every project. I believe in writing clean, efficient code and
-                  creating solutions that are not just functional but also
-                  secure and user-friendly.
+                  I have experience building scalable web applications, developing mobile applications with React Native,
+                  and integrating intelligent AI features. I believe in writing clean, maintainable code and creating
+                  user-centric solutions that make a real impact.
                 </p>
                 <p>
-                  When I'm not coding, I enjoy exploring new technologies,
-                  contributing to open-source projects, and sharing knowledge
-                  with the developer community. I'm always excited about the
-                  next challenge and opportunity to learn something new.
+                  When I'm not coding, I enjoy exploring emerging technologies, contributing to open-source projects,
+                  and sharing knowledge with the developer community. I'm always excited about new challenges and
+                  opportunities to grow as a developer.
                 </p>
               </div>
             </div>
