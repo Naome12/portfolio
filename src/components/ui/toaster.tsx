@@ -20,7 +20,7 @@ export function Toaster() {
             {description && <ToastDescription>{description}</ToastDescription>}
           </div>
           {action}
-          <ToastClose data-toast-close={() => props.onOpenChange?.(false)} />
+          <ToastClose onClose={() => props.onOpenChange?.(false)} />
         </Toast>
       ))}
       <ToastViewport />

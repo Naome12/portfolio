@@ -30,11 +30,12 @@ export function Sheet({ open, onClose, children, ...props }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className={cn("w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all")}> 
+              <Dialog.Panel className={cn("w-full max-w-lg transform overflow-hidden rounded-2xl bg-card text-card-foreground border border-border p-6 text-left align-middle shadow-xl transition-all")}> 
                 <button
                   type="button"
-                  className="absolute right-4 top-4 text-gray-400 hover:text-gray-500"
+                  className="absolute right-4 top-4 text-muted-foreground hover:text-foreground rounded-lg p-1 hover:bg-accent transition-colors"
                   onClick={onClose}
+                  aria-label="Close"
                 >
                   <X className="h-6 w-6" />
                 </button>

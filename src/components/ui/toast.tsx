@@ -71,17 +71,24 @@ export function ToastDescription(props: React.HTMLAttributes<HTMLDivElement>) {
   return <div className={cn("text-sm opacity-90", props.className)} {...props} />
 }
 
-export function ToastClose(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+export function ToastClose({
+  className,
+  onClick,
+  onClose,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { onClose?: () => void }) {
   return (
     <button
+      type="button"
       className={cn(
         "absolute right-2 top-2 rounded p-1 opacity-70 transition hover:opacity-100",
-        props.className
+        className
       )}
       onClick={(e) => {
-        props.onClick?.(e)
-        props?.["data-toast-close"]?.()
+        onClick?.(e)
+        onClose?.()
       }}
+      aria-label="Close toast"
       {...props}
     >
       <X className="h-4 w-4" />

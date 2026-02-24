@@ -1,120 +1,158 @@
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Download, Github, Mail, MapPin } from "lucide-react";
+import { MapPin, Github, Mail, ArrowDown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import heroImage from "@/assets/hero-bg.jpg";
 import profilePhoto from "@/assets/profile-photo.jpg";
+import { cn } from "@/lib/utils";
+import { fadeInUp, staggerContainer, defaultViewport, transition } from "@/lib/motion";
 
 const Hero = () => {
   const { toast } = useToast();
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      />
-      <div className="absolute inset-0 bg-gradient-primary opacity-10" />
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
-          {/* Profile Image */}
-          <div className="flex-shrink-0 animate-fade-in">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden font-sans"
+      aria-label="Hero"
+    >
+      <div className="absolute inset-0 bg-gradient-muted opacity-40 dark:opacity-20 pointer-events-none" />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          <motion.div
+            className="flex-shrink-0"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ ...transition, delay: 0.1 }}
+          >
             <div className="relative">
-              <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-primary/40 shadow-glow-blue gentle-glow">
+              <div className="w-56 h-56 sm:w-64 sm:h-64 rounded-2xl overflow-hidden border border-border/50 shadow-2xl bg-card">
                 <img
                   src={profilePhoto}
                   alt="Tuyishime Naome"
                   className="w-full h-full object-cover"
+                  width={256}
+                  height={256}
                 />
               </div>
-              <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-5" />
             </div>
-          </div>
+          </motion.div>
 
-          {/* Hero Content */}
-          <div className="flex-1 text-center lg:text-left space-y-6 animate-fade-in">
-            <div className="space-y-4">
-              <h1 className="text-5xl lg:text-7xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                Tuyishime Naome
-              </h1>
-              <h2 className="text-2xl lg:text-3xl text-tech-blue font-semibold">
-                Full Stack Developer
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl">
-                Passionate about creating innovative solutions through full stack development,
-                mobile engineering, and AI integration. Building secure, scalable
-                applications that make a difference.
-              </p>
-            </div>
+          <motion.div
+            className="flex-1 text-center lg:text-left"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            viewport={defaultViewport}
+          >
+            <motion.p
+              variants={fadeInUp}
+              transition={transition}
+              className="text-sm font-medium text-primary uppercase tracking-widest mb-3"
+            >
+              Full Stack Developer
+            </motion.p>
+            <motion.h1
+              variants={fadeInUp}
+              transition={transition}
+              className={cn(
+                "text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground font-serif tracking-tight mb-4"
+              )}
+            >
+              Tuyishime Naome
+            </motion.h1>
+            <motion.p
+              variants={fadeInUp}
+              transition={transition}
+              className="text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed"
+            >
+              I build scalable software that makes a real impact
+            </motion.p>
 
-            {/* Skills Tags */}
-            <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-              {["Full Stack", "Embedded Systems", "React", "Node.js", "Python", "IoT"].map((skill) => (
-                <span
-                  key={skill}
-                  className="px-4 py-2 bg-secondary border border-primary/20 rounded-full text-sm font-medium text-primary hover:bg-primary/10 transition-all duration-300"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-
-            {/* Location */}
-            <div className="flex items-center gap-2 justify-center lg:justify-start text-muted-foreground">
-              <MapPin size={18} />
-              <span>Rwanda</span>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <motion.div
+              variants={fadeInUp}
+              transition={transition}
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8"
+            >
               <Button
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                onClick={() =>
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+                }
               >
-                <Mail className="mr-2" size={18} />
-                Get In Touch
+                Let&apos;s Talk
               </Button>
-              <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf" download>
-                <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 w-full">
-                  <Download className="mr-2" size={18} />
-                  Download CV
-                </Button>
-              </a>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex gap-4 justify-center lg:justify-start">
-              <a href="https://github.com/Naome12" target="_blank" rel="noopener noreferrer">
-                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10">
-                  <Github size={20} />
-                </Button>
-              </a>
               <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-primary hover:bg-primary/10"
-                onClick={() => {
-                  navigator.clipboard.writeText('tuyishimenaome27@gmail.com');
-                  toast({
-                    title: "Copied!",
-                    description: "Email copied to clipboard."
-                  });
-                }}
-                title="Click to copy email"
+                variant="outline"
+                size="lg"
+                className="border-border hover:bg-accent rounded-lg font-medium"
+                asChild
               >
-                <Mail size={20} />
+                <a
+                  href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf"
+                  download
+                >
+                  View Work
+                </a>
               </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+            </motion.div>
 
-      {/* Floating Elements */}
-      <div className="absolute top-20 right-20 w-20 h-20 bg-tech-purple/10 rounded-full subtle-float" />
-      <div className="absolute bottom-32 left-16 w-16 h-16 bg-tech-cyan/10 rounded-full subtle-float" style={{ animationDelay: '1s' }} />
-      <div className="absolute top-1/2 right-10 w-12 h-12 bg-primary/10 rounded-full subtle-float" style={{ animationDelay: '2s' }} />
+            <motion.div
+              variants={fadeInUp}
+              transition={transition}
+              className="flex flex-wrap items-center gap-6 justify-center lg:justify-start text-muted-foreground text-sm"
+            >
+              <span className="flex items-center gap-2">
+                <MapPin size={16} aria-hidden />
+                Rwanda
+              </span>
+              <div className="flex gap-3">
+                <a
+                  href="https://github.com/Naome12"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="GitHub"
+                >
+                  <Github size={18} />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText("tuyishimenaome27@gmail.com");
+                    toast({
+                      title: "Copied!",
+                      description: "Email copied to clipboard.",
+                    });
+                  }}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Copy email"
+                >
+                  <Mail size={18} />
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, ...transition }}
+        >
+          <button
+            type="button"
+            onClick={() =>
+              document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="p-2 rounded-full border border-border/50 text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
+            aria-label="Scroll to about"
+          >
+            <ArrowDown size={20} />
+          </button>
+        </motion.div>
+      </div>
     </section>
   );
 };

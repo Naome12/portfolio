@@ -1,18 +1,14 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import {
-  Mail, Phone, MapPin, Github,
-  Send, Clock, Globe, Download
-} from "lucide-react";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { Mail, Phone, MapPin, Github, Send, Clock, Globe, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { fadeInUp, staggerContainer, defaultViewport, transition } from "@/lib/motion";
 
 const Contact = () => {
-  const { ref: sectionRef, isVisible } = useScrollAnimation();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
@@ -34,114 +30,95 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const formspreeId = import.meta.env.VITE_FORMSPREE_FORM_ID || "";
+    const formspreeUrl = formspreeId
+      ? `https://formspree.io/f/${formspreeId}`
+      : "";
+
+    if (!formspreeUrl) {
+      toast({
+        title: "Contact form unavailable",
+        description: "Please email me directly at tuyishimenaome27@gmail.com",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      const response = await fetch("https://formspree.io/f/xwpzndzb", {
+      const response = await fetch(formspreeUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           subject: formData.subject,
           message: formData.message,
-          _subject: `New message from ${formData.name}: ${formData.subject}`,
-          _replyto: formData.email
-        })
+          _subject: `Portfolio: ${formData.subject}`,
+          _replyto: formData.email,
+        }),
       });
 
       if (response.ok) {
         toast({
-          title: "Success!",
-          description: "Message sent successfully! I'll get back to you soon.",
+          title: "Message sent",
+          description: "I'll get back to you soon.",
         });
         setFormData({ name: "", email: "", subject: "", message: "" });
+      } else if (response.status === 404) {
+        toast({
+          title: "Something went wrong",
+          description: "Please try again or email me at tuyishimenaome27@gmail.com",
+          variant: "destructive",
+        });
       } else {
         toast({
-          title: "Error",
-          description: "Failed to send message. Please try again.",
-          variant: "destructive"
+          title: "Send failed",
+          description: "Please try again or email me directly.",
+          variant: "destructive",
         });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
-        description: "An error occurred. Please try again later.",
-        variant: "destructive"
+        description: "Please try again or email me directly.",
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
     }
   }
   const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "tuyishimenaome27@gmail.com",
-      link: "mailto:tuyishimenaome27@gmail.com"
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+250 793 099 772",
-      link: "tel:+250793099772"
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Kigali, Rwanda",
-      link: "#"
-    },
-    {
-      icon: Globe,
-      label: "Website",
-      value: "naome-portfolio.dev",
-      link: "https://naome-portfolio.dev"
-    }
-  ];
-
-  const socialLinks = [
-    {
-      icon: Github,
-      label: "GitHub",
-      username: "@Naome12",
-      link: "https://github.com/Naome12",
-      color: "hover:text-gray-400"
-    },
-    {
-      icon: Mail,
-      label: "Email",
-      username: "tuyishimenaome27@gmail.com",
-      link: "mailto:tuyishimenaome27@gmail.com",
-      color: "hover:text-blue-400"
-    }
+    { icon: Mail, label: "Email", value: "tuyishimenaome27@gmail.com", link: "mailto:tuyishimenaome27@gmail.com", copy: true },
+    { icon: Phone, label: "Phone", value: "+250 793 099 772", link: "tel:+250793099772", copy: false },
+    { icon: MapPin, label: "Location", value: "Kigali, Rwanda", link: "#", copy: false },
+    { icon: Globe, label: "Website", value: "naome.dev", link: "https://naome-portfolio.dev", copy: false },
+    { icon: Github, label: "GitHub", value: "github.com/Naome12", link: "https://github.com/Naome12", copy: false },
   ];
 
   const availability = [
     "Full-time opportunities",
     "Freelance projects",
-    "Consulting services",
-    "Open source collaboration"
   ];
 
   return (
-    <section id="contact" className="py-20 bg-secondary/5" ref={sectionRef}>
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          {/* Section Header */}
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-              Let's Work Together
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Ready to bring your ideas to life? Let's discuss how we can collaborate on your next project.
-            </p>
-          </div>
+    <section id="contact" className="py-20 lg:py-28 bg-muted/30" aria-labelledby="contact-heading">
+      <div className="section-divider my-0" />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          <motion.div className="text-center mb-14" initial="hidden" whileInView="visible" viewport={defaultViewport} variants={staggerContainer}>
+            <motion.h2 id="contact-heading" variants={fadeInUp} transition={transition} className="text-3xl sm:text-4xl font-bold text-foreground font-serif mb-4">
+              Let&apos;s Work Together
+            </motion.h2>
+            <motion.p variants={fadeInUp} transition={transition} className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Ready to bring your ideas to life? Get in touch for freelance or full-time opportunities.
+            </motion.p>
+          </motion.div>
 
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Contact Form */}
             <div className="lg:col-span-2 space-y-8">
-              <Card className="p-8 bg-card border border-primary/10 animate-fade-in">
+              <Card className="p-8 bg-card border border-border rounded-xl">
                 <h3 className="text-2xl font-bold text-foreground mb-6">Send Me a Message</h3>
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid md:grid-cols-2 gap-6">
@@ -150,7 +127,7 @@ const Contact = () => {
                       <Input
                         name="name"
                         placeholder="Your full name"
-                        className="bg-background border-primary/20 focus:border-primary"
+                        className="bg-background border-border focus:border-primary"
                         value={formData.name}
                         onChange={handleInputChange}
                         required
@@ -162,7 +139,7 @@ const Contact = () => {
                         type="email"
                         name="email"
                         placeholder="your.email@example.com"
-                        className="bg-background border-primary/20 focus:border-primary"
+                        className="bg-background border-border focus:border-primary"
                         value={formData.email}
                         onChange={handleInputChange}
                         required
@@ -175,7 +152,7 @@ const Contact = () => {
                     <Input
                       name="subject"
                       placeholder="Project discussion, job opportunity, etc."
-                      className="bg-background border-primary/20 focus:border-primary"
+                      className="bg-background border-border focus:border-primary"
                       value={formData.subject}
                       onChange={handleInputChange}
                       required
@@ -188,7 +165,7 @@ const Contact = () => {
                       name="message"
                       placeholder="Tell me about your project or opportunity..."
                       rows={6}
-                      className="bg-background border-primary/20 focus:border-primary resize-none"
+                      className="bg-background border-border focus:border-primary resize-none"
                       value={formData.message}
                       onChange={handleInputChange}
                       required
@@ -208,7 +185,7 @@ const Contact = () => {
               </Card>
 
               {/* Quick Response Promise */}
-              <Card className="p-6 bg-card border border-primary/10 animate-fade-in">
+              <Card className="p-6 bg-card border border-border rounded-xl">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-primary/10 rounded-lg">
                     <Clock className="w-6 h-6 text-primary" />
@@ -221,105 +198,63 @@ const Contact = () => {
               </Card>
             </div>
 
-            {/* Contact Information */}
-            <div className="space-y-8">
-              {/* Contact Details */}
-              <Card className="p-6 bg-card border border-primary/10 animate-fade-in">
-                <h3 className="text-xl font-bold text-foreground mb-6">Contact Information</h3>
-                <div className="space-y-4">
-                  {contactInfo.map((info, index) => (
-                    <div
-                      key={index}
-                      onClick={() => {
-                        if (info.label === "Email") {
-                          navigator.clipboard.writeText("tuyishimenaome27@gmail.com");
-                          toast({
-                            title: "Copied!",
-                            description: "Email copied to clipboard."
-                          });
-                        } else if (info.link && info.link !== "#") {
-                          window.location.href = info.link;
-                        }
-                      }}
-                      className="flex items-center gap-4 p-3 rounded-lg hover:bg-primary/5 transition-colors duration-300 group cursor-pointer"
-                    >
-                      <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors duration-300">
-                        <info.icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">{info.label}</p>
-                        <p className="font-medium text-foreground">{info.value}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-
-              {/* Social Links */}
-              <Card className="p-6 bg-card border border-primary/10 animate-fade-in">
-                <h3 className="text-xl font-bold text-foreground mb-6">Connect With Me</h3>
-                <div className="space-y-4">
-                  {socialLinks.map((social, index) => (
-                    <div
-                      key={index}
-                      onClick={() => {
-                        if (social.label === "Email") {
-                          navigator.clipboard.writeText("tuyishimenaome27@gmail.com");
-                          toast({
-                            title: "Copied!",
-                            description: "Email copied to clipboard."
-                          });
-                        } else {
-                          window.open(social.link, "_blank");
-                        }
-                      }}
-                      className="flex items-center gap-4 p-3 rounded-lg hover:bg-primary/5 transition-colors duration-300 group cursor-pointer"
-                    >
-                      <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors duration-300">
-                        <social.icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">{social.label}</p>
-                        <p className="font-medium text-foreground">{social.username}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-
-              {/* Availability */}
-              <Card className="p-6 bg-card border border-primary/10 animate-fade-in">
-                <h3 className="text-xl font-bold text-foreground mb-4">Available For</h3>
+            {/* Contact & Connect */}
+            <div className="space-y-6">
+              <Card className="p-6 bg-card border border-border rounded-xl">
+                <h3 className="text-lg font-semibold text-foreground mb-4">Contact</h3>
                 <div className="space-y-3">
-                  {availability.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-primary rounded-full" />
-                      <span className="text-muted-foreground">{item}</span>
+                  {contactInfo.map((info, index) => (
+                    info.link === "#" ? (
+                    <div key={index} className="flex items-center gap-3 p-2.5 rounded-lg">
+                      <info.icon className="w-4 h-4 text-primary shrink-0" aria-hidden />
+                      <div className="min-w-0">
+                        <p className="text-sm text-muted-foreground">{info.label}</p>
+                        <p className="text-sm font-medium text-foreground">{info.value}</p>
+                      </div>
                     </div>
-                  ))}
-                </div>
-                
-                <div className="mt-6 pt-6 border-t border-primary/10">
-                  <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf" download className="block">
-                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10">
-                      <Download className="mr-2" size={16} />
-                      Download CV
-                    </Button>
-                  </a>
+                  ) : (
+                    <a
+                      key={index}
+                      href={info.link}
+                      target={info.label === "GitHub" ? "_blank" : undefined}
+                      rel={info.label === "GitHub" ? "noopener noreferrer" : undefined}
+                      onClick={(e) => {
+                        if (info.copy) {
+                          e.preventDefault();
+                          navigator.clipboard.writeText(info.value);
+                          toast({ title: "Copied!", description: "Email copied to clipboard." });
+                        }
+                      }}
+                      className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-accent/50 transition-colors"
+                    >
+                      <info.icon className="w-4 h-4 text-primary shrink-0" aria-hidden />
+                      <div className="min-w-0">
+                        <p className="text-sm text-muted-foreground">{info.label}</p>
+                        <p className="text-sm font-medium text-foreground truncate">{info.value}</p>
+                      </div>
+                    </a>
+                  ))
+                )}
                 </div>
               </Card>
 
-              {/* Current Status */}
-              <Card className="p-6 bg-card border border-primary/10 animate-fade-in">
-                <div className="text-center space-y-4">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-green-500 text-sm font-medium">Available for new projects</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Currently accepting new opportunities and collaborations.
-                  </p>
-                </div>
+              {/* Availability & CV */}
+              <Card className="p-6 bg-card border border-border rounded-xl">
+                <h3 className="text-lg font-semibold text-foreground mb-3">Available for</h3>
+                <ul className="space-y-2 mb-6">
+                  {availability.map((item, index) => (
+                    <li key={index} className="text-sm text-muted-foreground flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary rounded-full shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf" download className="block">
+                  <Button variant="outline" size="sm" className="w-full border-border rounded-lg">
+                    <Download className="mr-2" size={14} />
+                    Download CV
+                  </Button>
+                </a>
               </Card>
             </div>
           </div>

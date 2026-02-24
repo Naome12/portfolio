@@ -1,140 +1,89 @@
+import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Code, Smartphone, Cpu, Award } from "lucide-react";
+import { Code, Smartphone, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { fadeInUp, staggerContainer, defaultViewport, transition } from "@/lib/motion";
 
 const About = () => {
-  const { ref: sectionRef, isVisible } = useScrollAnimation();
   const stats = [
-    { icon: Code, label: "Projects Completed", value: "15+" },
-    { icon: Award, label: "Years Experience", value: "3+" },
+    { icon: Code, label: "Projects", value: "15+" },
+    { icon: Award, label: "Experience", value: "3+ yrs" },
   ];
 
   const expertise = [
     {
       icon: Code,
-      title: "Full Stack Development",
-      description:
-        "Building scalable web applications with modern technologies like React, Node.js, Python, FastAPI, and databases.",
-      skills: [
-        "React",
-        "Node.js",
-        "Python",
-        "PostgreSQL",
-        "TypeScript",
-        "FastAPI",
-      ],
+      title: "Full Stack",
+      description: "React, Node.js, Python, FastAPI, PostgreSQL, TypeScript.",
+      skills: ["React", "Node.js", "Python", "PostgreSQL", "TypeScript", "FastAPI"],
     },
     {
       icon: Smartphone,
-      title: "Mobile & AI Development",
-      description:
-        "Creating mobile applications with React Native and integrating intelligent AI features using LangChain and LLMs.",
+      title: "Mobile & AI",
+      description: "React Native, Expo, LangChain, LLMs, RAG, Voice APIs.",
       skills: ["React Native", "Expo", "LangChain", "LLMs", "RAG", "Voice APIs"],
     },
   ];
 
   return (
-    <section id="about" className="py-20 bg-secondary/5" ref={sectionRef}>
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          {/* Section Header */}
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
+    <section id="about" className="py-20 lg:py-28 bg-muted/30" aria-labelledby="about-heading">
+      <div className="section-divider my-0" />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            className="text-center mb-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={defaultViewport}
+            variants={staggerContainer}
+          >
+            <motion.h2 id="about-heading" variants={fadeInUp} transition={transition} className="text-3xl sm:text-4xl font-bold text-foreground font-serif mb-4">
               About Me
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              A passionate developer dedicated to creating innovative solutions
-              that bridge the gap between technology and real-world problems.
-            </p>
-          </div>
-
-          <div className="text-center mb-8 animate-fade-in">
-            <a href="/Naome_Tuyishime_CV.pdf" download>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary text-primary hover:bg-primary/10 mt-4"
-              >
-                Download CV
+            </motion.h2>
+            <motion.p variants={fadeInUp} transition={transition} className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
+              Developer focused on building solutions that bridge technology and real-world impact.
+            </motion.p>
+            <motion.div variants={fadeInUp} transition={transition}>
+              <Button variant="outline" size="lg" className="rounded-lg border-border" asChild>
+                <a href="/Naome_Tuyishime_CV.pdf" download>Download CV</a>
               </Button>
-            </a>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-2 gap-6 mb-16">
-            {stats.map((stat, index) => (
-              <Card
-                key={index}
-                className="p-6 text-center bg-card border border-primary/10 hover:border-primary/30 transition-all duration-300 animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <stat.icon className="w-8 h-8 text-primary mx-auto mb-3" />
-                <div className="text-3xl font-bold text-primary mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {stat.label}
-                </div>
-              </Card>
+          <motion.div className="grid grid-cols-2 gap-4 mb-14" initial="hidden" whileInView="visible" viewport={defaultViewport} variants={staggerContainer}>
+            {stats.map((stat) => (
+              <motion.div key={stat.label} variants={fadeInUp} transition={transition}>
+                <Card className="p-6 text-center bg-card border border-border rounded-xl">
+                  <stat.icon className="w-8 h-8 text-primary mx-auto mb-2" aria-hidden />
+                  <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Main Content */}
-          <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
-            {/* Bio */}
-            <div className="space-y-6 animate-fade-in">
-              <h3 className="text-2xl font-bold text-foreground">My Journey</h3>
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  I'm Tuyishime Naome, a passionate full stack developer with expertise in web development,
-                  mobile engineering, and AI integration. My journey began with curiosity about how technology
-                  shapes our world, and it has evolved into a comprehensive skill set that allows me to create
-                  innovative solutions.
-                </p>
-                <p>
-                  I have experience building scalable web applications, developing mobile applications with React Native,
-                  and integrating intelligent AI features. I believe in writing clean, maintainable code and creating
-                  user-centric solutions that make a real impact.
-                </p>
-                <p>
-                  When I'm not coding, I enjoy exploring emerging technologies, contributing to open-source projects,
-                  and sharing knowledge with the developer community. I'm always excited about new challenges and
-                  opportunities to grow as a developer.
-                </p>
-              </div>
-            </div>
-
-            {/* Expertise Areas */}
-            <div className="space-y-6 animate-fade-in">
-              <h3 className="text-2xl font-bold text-foreground">
-                Expertise Areas
-              </h3>
-              <div className="space-y-6">
-                {expertise.map((area, index) => (
-                  <Card
-                    key={index}
-                    className="p-6 bg-card border border-primary/10 hover:border-primary/30 transition-all duration-300"
-                  >
+          <motion.div className="grid lg:grid-cols-2 gap-8" initial="hidden" whileInView="visible" viewport={defaultViewport} variants={staggerContainer}>
+            <motion.div className="space-y-4" variants={fadeInUp} transition={transition}>
+              <h3 className="text-xl font-semibold text-foreground">My Journey</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                I&apos;m Tuyishime Naome, a full stack developer focused on web, mobile, and AI. I build scalable applications and user-centric products, and enjoy open source and new technologies.
+              </p>
+            </motion.div>
+            <div className="space-y-6">
+              {expertise.map((area) => (
+                <motion.div key={area.title} variants={fadeInUp} transition={transition}>
+                  <Card className="p-6 bg-card border border-border rounded-xl">
                     <div className="flex items-start gap-4">
-                      <div className="p-3 bg-primary/10 rounded-lg">
-                        <area.icon className="w-6 h-6 text-primary" />
+                      <div className="p-2.5 bg-primary/10 rounded-lg">
+                        <area.icon className="w-5 h-5 text-primary" aria-hidden />
                       </div>
-                      <div className="flex-1">
-                        <h4 className="text-lg font-semibold text-foreground mb-2">
-                          {area.title}
-                        </h4>
-                        <p className="text-muted-foreground mb-3 text-sm">
-                          {area.description}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-1">{area.title}</h4>
+                        <p className="text-sm text-muted-foreground mb-3">{area.description}</p>
+                        <div className="flex flex-wrap gap-1.5">
                           {area.skills.map((skill) => (
-                            <Badge
-                              key={skill}
-                              variant="secondary"
-                              className="text-xs bg-primary/10 text-primary border-primary/20"
-                            >
+                            <Badge key={skill} variant="secondary" className="text-xs font-normal bg-muted/80 text-muted-foreground border-0">
                               {skill}
                             </Badge>
                           ))}
@@ -142,10 +91,10 @@ const About = () => {
                       </div>
                     </div>
                   </Card>
-                ))}
-              </div>
+                </motion.div>
+              ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

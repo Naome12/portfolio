@@ -1,11 +1,9 @@
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Github, Mail, ArrowUp } from "lucide-react";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
-  const { ref: sectionRef, isVisible } = useScrollAnimation();
   const { toast } = useToast();
   const currentYear = new Date().getFullYear();
 
@@ -34,118 +32,54 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-secondary/10 border-t border-border" ref={sectionRef}>
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-6xl mx-auto">
-          {/* Main Footer Content */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-            {/* Brand Section */}
-            <div className="lg:col-span-2 space-y-4">
-              <h3 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                Tuyishime Naome
-              </h3>
-              <p className="text-muted-foreground max-w-md">
-                Full Stack Developer passionate about creating innovative solutions through
-                web development, mobile engineering, and AI integration.
-              </p>
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => (
-                  <Button
-                    key={index}
-                    variant="ghost"
-                    size="icon"
-                    className="text-muted-foreground hover:text-primary hover:bg-primary/10"
-                    onClick={() => {
-                      if (social.isEmail) {
-                        navigator.clipboard.writeText("tuyishimenaome27@gmail.com");
-                        toast({
-                          title: "Copied!",
-                          description: "Email copied to clipboard."
-                        });
-                      } else {
-                        window.open(social.href, "_blank");
-                      }
-                    }}
-                  >
-                    <social.icon className="w-5 h-5" />
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-foreground">Quick Links</h4>
-              <nav className="space-y-2">
-                {quickLinks.map((link, index) => (
-                  <button
-                    key={index}
-                    onClick={() => scrollToSection(link.href)}
-                    className="block text-muted-foreground hover:text-primary transition-colors duration-300 text-left"
-                  >
-                    {link.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
-
-            {/* Contact Info */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-foreground">Get In Touch</h4>
-              <div className="space-y-2 text-muted-foreground">
-                <p>Kigali, Rwanda</p>
+    <footer className="bg-background border-t border-border" aria-label="Footer">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
+            <span>© {currentYear} Tuyishime Naome</span>
+            <nav className="flex gap-6" aria-label="Footer navigation">
+              {quickLinks.map((link) => (
                 <button
-                  onClick={() => {
-                    navigator.clipboard.writeText("tuyishimenaome27@gmail.com");
-                    toast({
-                      title: "Copied!",
-                      description: "Email copied to clipboard."
-                    });
-                  }}
-                  className="block hover:text-primary transition-colors duration-300 text-left"
+                  key={link.href}
+                  type="button"
+                  onClick={() => scrollToSection(link.href)}
+                  className="hover:text-foreground transition-colors"
                 >
-                  tuyishimenaome27@gmail.com
+                  {link.label}
                 </button>
-                <a 
-                  href="tel:+250793099772"
-                  className="block hover:text-primary transition-colors duration-300"
-                >
-                  +250 793 099 772
-                </a>
-              </div>
-              
-              {/* Availability Status */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-green-500 text-sm">Available for projects</span>
-              </div>
-            </div>
+              ))}
+            </nav>
           </div>
-
-          <Separator className="my-8 bg-border" />
-
-          {/* Bottom Footer */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-muted-foreground text-sm">
-              <span>© {currentYear} Tuyishime Naome</span>
-           
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="text-sm text-muted-foreground">
-                Built with React + Vite + Tailwind CSS
-              </div>
-              
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={scrollToTop}
-                className="text-muted-foreground hover:text-primary hover:bg-primary/10"
-                aria-label="Scroll to top"
-              >
-                <ArrowUp className="w-4 h-4" />
-              </Button>
-            </div>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/Naome12"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              aria-label="GitHub"
+            >
+              <Github size={18} />
+            </a>
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard.writeText("tuyishimenaome27@gmail.com");
+                toast({ title: "Copied!", description: "Email copied to clipboard." });
+              }}
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              aria-label="Copy email"
+            >
+              <Mail size={18} />
+            </button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={scrollToTop}
+              className="text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg"
+              aria-label="Scroll to top"
+            >
+              <ArrowUp size={18} />
+            </Button>
           </div>
         </div>
       </div>
