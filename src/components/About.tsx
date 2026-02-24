@@ -46,7 +46,7 @@ const About = () => {
             </motion.p>
             <motion.div variants={fadeInUp} transition={transition}>
               <Button variant="outline" size="lg" className="rounded-lg border-border" asChild>
-                <a href="/Naome_Tuyishime_CV.pdf" download>Download CV</a>
+                <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/preview" target="_blank" rel="noopener noreferrer">Download CV</a>
               </Button>
             </motion.div>
           </motion.div>

@@ -249,7 +249,7 @@ const Contact = () => {
                     </li>
                   ))}
                 </ul>
-                <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf" download className="block">
+                <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/preview" target="_blank" rel="noopener noreferrer" className="block">
                   <Button variant="outline" size="sm" className="w-full border-border rounded-lg">
                     <Download className="mr-2" size={14} />
                     Download CV

@@ -93,8 +93,9 @@ const Navigation = () => {
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
             <a
-              href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf"
-              download
+              href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/preview"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Button
                 variant="outline"
@@ -147,8 +148,9 @@ const Navigation = () => {
               <div className="mt-auto pt-6 border-t border-border space-y-3">
                 <ThemeToggle />
                 <a
-                  href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf"
-                  download
+                  href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/preview"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="block"
                 >
                   <Button variant="outline" className="w-full rounded-lg">

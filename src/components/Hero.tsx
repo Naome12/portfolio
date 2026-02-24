@@ -89,8 +89,9 @@ const Hero = () => {
                 asChild
               >
                 <a
-                  href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/export?format=pdf"
-                  download
+                  href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/preview"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   View Work
                 </a>
