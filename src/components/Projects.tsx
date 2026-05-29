@@ -1,188 +1,116 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Github, ExternalLink } from "lucide-react";
+import { Github } from "lucide-react";
 import { ProjectCard, type ProjectItem } from "./ProjectCard";
 import { AppDialog } from "@/components/ui/dialog";
-import { fadeInUp, defaultViewport, transition, staggerContainer } from "@/lib/motion";
+import { Section, SectionHeader, AnimatedGrid } from "@/components/layout/Section";
+import { GITHUB_URL } from "@/lib/constants";
+import { defaultViewport, transition } from "@/lib/motion";
 
-interface ProjectWithFeatured extends ProjectItem {
-  featured?: boolean;
-}
-
-const projects: ProjectWithFeatured[] = [
+const projects: ProjectItem[] = [
   {
     title: "Parking Management System",
     description:
-      "Embedded system for automated vehicle parking, monitoring, and space allocation.",
+      "Embedded system for automated vehicle parking, monitoring, and space allocation with real-time dashboards.",
     technologies: ["C++", "Arduino", "Raspberry Pi", "MQTT", "React", "Python"],
-    category: "Embedded Systems",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
+    category: "Embedded",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=500&fit=crop",
     github: "https://github.com/Naome12/PMS",
     live: "#",
-    featured: true,
   },
   {
     title: "Mediconnect",
     description:
-      "Healthcare application with Flutter frontend, Node.js backend, and Firebase for real-time data synchronization and authentication.",
+      "Healthcare platform with Flutter mobile app, Node.js backend, and Firebase for sync and authentication.",
     technologies: ["Flutter", "Node.js", "Firebase"],
-    category: "Full Stack",
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=400&fit=crop",
+    category: "Full stack",
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=500&fit=crop",
     github: "https://github.com/Naome12/Mediconnect",
     live: "#",
-    featured: true,
   },
   {
     title: "Aidly",
     description:
-      "Mobile application with voice features, accessible UI, and speech-to-text and text-to-speech integration.",
-    technologies: ["React Native", "Expo", "NativeWind", "Tailwind CSS", "Voice API"],
-    category: "Full Stack",
+      "Accessible mobile app with voice input/output, built with React Native and modern UI tooling.",
+    technologies: ["React Native", "Expo", "NativeWind", "Voice API"],
+    category: "Mobile",
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F160b886f4f6049a7a81b58c84259efec%2Fe744a9975ee84062a9ab44b0f0e41fef?format=webp&width=800",
     github: "https://github.com/Naome12/Aidly",
     live: "#",
-    featured: true,
   },
 ];
 
-const allProjects = projects;
-
 const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+  const [selected, setSelected] = useState<ProjectItem | null>(null);
 
   return (
-    <section id="projects" className="py-20 lg:py-28 bg-background" aria-labelledby="projects-heading">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            className="text-center mb-14"
-            initial="hidden"
-            whileInView="visible"
-            viewport={defaultViewport}
-            variants={staggerContainer}
-          >
-            <motion.h2
-              id="projects-heading"
-              variants={fadeInUp}
-              transition={transition}
-              className="text-3xl sm:text-4xl font-bold text-foreground font-serif mb-4"
-            >
-              Selected Projects
-            </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              transition={transition}
-              className="text-muted-foreground text-lg max-w-2xl mx-auto"
-            >
-              A selection of my work across full stack development and embedded systems.
-            </motion.p>
-          </motion.div>
+    <Section id="projects" variant="muted">
+      <SectionHeader
+        label="Work"
+        title="Selected projects"
+        description="Real builds across embedded systems, healthcare, and mobile — with code you can explore on GitHub."
+      />
 
-          <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={defaultViewport}
-            variants={staggerContainer}
-          >
-            {allProjects.map((project, index) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                index={index}
-                onClick={() => setSelectedProject(project)}
-              />
-            ))}
-          </motion.div>
+      <AnimatedGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {projects.map((project, index) => (
+          <ProjectCard
+            key={project.title}
+            project={project}
+            index={index}
+            onClick={() => setSelected(project)}
+          />
+        ))}
+      </AnimatedGrid>
 
-          <motion.div
-            className="text-center mt-14"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={defaultViewport}
-          >
-            <a
-              href="https://github.com/Naome12"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex"
-            >
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-lg border-border hover:bg-accent font-medium"
-              >
-                <Github className="mr-2" size={18} aria-hidden />
-                View all on GitHub
-              </Button>
-            </a>
-          </motion.div>
-        </div>
-      </div>
-
-      <AppDialog
-        open={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
+      <motion.div
+        className="text-center mt-14"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={defaultViewport}
+        transition={transition}
       >
-        {selectedProject ? (
-          <div className="rounded-2xl overflow-hidden max-w-2xl max-h-[90vh] overflow-y-auto -m-6">
-            <div className="relative aspect-video overflow-hidden">
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-3 left-3">
-                <Badge className="bg-primary/90 text-primary-foreground border-0">
-                  {selectedProject.category}
-                </Badge>
-              </div>
+        <a
+          href={GITHUB_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border font-medium hover:bg-accent transition-colors"
+        >
+          <Github className="w-5 h-5" aria-hidden />
+          More on GitHub
+        </a>
+      </motion.div>
+
+      <AppDialog open={!!selected} onClose={() => setSelected(null)}>
+        {selected && (
+          <div className="-m-6 max-h-[85vh] overflow-y-auto rounded-2xl">
+            <div className="relative aspect-video">
+              <img src={selected.image} alt="" className="w-full h-full object-cover" />
             </div>
             <div className="p-6">
-              <h3 className="text-2xl font-bold font-serif text-foreground mb-2">
-                {selectedProject.title}
-              </h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                {selectedProject.description}
-              </p>
+              <p className="text-sm font-medium text-primary mb-1">{selected.category}</p>
+              <h3 className="text-2xl font-bold text-foreground mb-3">{selected.title}</h3>
+              <p className="text-muted-foreground leading-relaxed mb-6">{selected.description}</p>
               <div className="flex flex-wrap gap-2 mb-6">
-                {selectedProject.technologies.map((tech) => (
-                  <Badge
-                    key={tech}
-                    variant="secondary"
-                    className="bg-muted text-muted-foreground border-0"
-                  >
-                    {tech}
-                  </Badge>
+                {selected.technologies.map((t) => (
+                  <span key={t} className="px-3 py-1 text-sm rounded-lg bg-muted text-muted-foreground">
+                    {t}
+                  </span>
                 ))}
               </div>
-              <div className="flex gap-3">
-                <a
-                  href={selectedProject.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1"
-                >
-                  <Button className="w-full rounded-lg" variant="outline">
-                    <Github className="mr-2" size={18} /> Code
-                  </Button>
-                </a>
-                {selectedProject.live !== "#" && (
-                  <a href={selectedProject.live} target="_blank" rel="noopener noreferrer" className="flex-1">
-                    <Button className="w-full rounded-lg bg-primary text-primary-foreground hover:bg-primary/90">
-                      <ExternalLink className="mr-2" size={18} /> Live
-                    </Button>
-                  </a>
-                )}
-              </div>
+              <a
+                href={selected.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-medium"
+              >
+                <Github className="w-4 h-4" /> View repository
+              </a>
             </div>
           </div>
-        ) : null}
+        )}
       </AppDialog>
-    </section>
+    </Section>
   );
 };
 

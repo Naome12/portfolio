@@ -1,104 +1,103 @@
-import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Code, Smartphone, Award } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { fadeInUp, staggerContainer, defaultViewport, transition } from "@/lib/motion";
+import { Code, Smartphone, Award, Download } from "lucide-react";
+import { Section, SectionHeader, AnimatedGrid, AnimatedItem } from "@/components/layout/Section";
+import { CV_URL } from "@/lib/constants";
 
-const About = () => {
-  const stats = [
-    { icon: Code, label: "Projects", value: "15+" },
-    { icon: Award, label: "Experience", value: "3+ yrs" },
-  ];
+const stats = [
+  { icon: Code, label: "Projects shipped", value: "15+" },
+  { icon: Award, label: "Years building", value: "3+" },
+];
 
-  const expertise = [
-    {
-      icon: Code,
-      title: "Full Stack",
-      description: "React, Node.js, Python, FastAPI, PostgreSQL, TypeScript.",
-      skills: ["React", "Node.js", "Python", "PostgreSQL", "TypeScript", "FastAPI"],
-    },
-    {
-      icon: Smartphone,
-      title: "Mobile & AI",
-      description: "React Native, Expo, LangChain, LLMs, RAG, Voice APIs.",
-      skills: ["React Native", "Expo", "LangChain", "LLMs", "RAG", "Voice APIs"],
-    },
-  ];
+const expertise = [
+  {
+    icon: Code,
+    title: "Full stack engineering",
+    description:
+      "End-to-end web apps with React, Node.js, Python, and PostgreSQL — from API design to polished UI.",
+    skills: ["React", "TypeScript", "Node.js", "Python", "FastAPI", "PostgreSQL"],
+  },
+  {
+    icon: Smartphone,
+    title: "Mobile & intelligent systems",
+    description:
+      "Cross-platform apps with React Native and production AI features using LangChain, RAG, and voice APIs.",
+    skills: ["React Native", "Expo", "LangChain", "LLMs", "RAG"],
+  },
+];
 
-  return (
-    <section id="about" className="py-20 lg:py-28 bg-muted/30" aria-labelledby="about-heading">
-      <div className="section-divider my-0" />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            className="text-center mb-12"
-            initial="hidden"
-            whileInView="visible"
-            viewport={defaultViewport}
-            variants={staggerContainer}
-          >
-            <motion.h2 id="about-heading" variants={fadeInUp} transition={transition} className="text-3xl sm:text-4xl font-bold text-foreground font-serif mb-4">
-              About Me
-            </motion.h2>
-            <motion.p variants={fadeInUp} transition={transition} className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
-              Developer focused on building solutions that bridge technology and real-world impact.
-            </motion.p>
-            <motion.div variants={fadeInUp} transition={transition}>
-              <Button variant="outline" size="lg" className="rounded-lg border-border" asChild>
-                <a href="https://docs.google.com/document/d/1Yjijx5uknmNRIK4H5WxKhSq4kVsN3tzS46j3h8eNPdE/preview" target="_blank" rel="noopener noreferrer">Download CV</a>
-              </Button>
-            </motion.div>
-          </motion.div>
+const About = () => (
+  <Section id="about" variant="muted">
+    <SectionHeader
+      label="About"
+      title="Building software that matters"
+      description="I'm a developer who cares about clean architecture, thoughtful UX, and shipping work that holds up in the real world."
+    />
 
-          <motion.div className="grid grid-cols-2 gap-4 mb-14" initial="hidden" whileInView="visible" viewport={defaultViewport} variants={staggerContainer}>
-            {stats.map((stat) => (
-              <motion.div key={stat.label} variants={fadeInUp} transition={transition}>
-                <Card className="p-6 text-center bg-card border border-border rounded-xl">
-                  <stat.icon className="w-8 h-8 text-primary mx-auto mb-2" aria-hidden />
-                  <div className="text-2xl font-bold text-foreground">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
+    <AnimatedGrid className="grid sm:grid-cols-2 gap-4 max-w-lg mx-auto mb-14">
+      {stats.map((stat) => (
+        <AnimatedItem key={stat.label}>
+          <div className="p-6 rounded-2xl bg-card border border-border text-center hover:border-primary/30 hover:shadow-glow-sm transition-all duration-300">
+            <stat.icon className="w-7 h-7 text-primary mx-auto mb-3" aria-hidden />
+            <p className="text-3xl font-bold text-foreground">{stat.value}</p>
+            <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+          </div>
+        </AnimatedItem>
+      ))}
+    </AnimatedGrid>
 
-          <motion.div className="grid lg:grid-cols-2 gap-8" initial="hidden" whileInView="visible" viewport={defaultViewport} variants={staggerContainer}>
-            <motion.div className="space-y-4" variants={fadeInUp} transition={transition}>
-              <h3 className="text-xl font-semibold text-foreground">My Journey</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                I&apos;m Tuyishime Naome, a full stack developer focused on web, mobile, and AI. I build scalable applications and user-centric products, and enjoy open source and new technologies.
-              </p>
-            </motion.div>
-            <div className="space-y-6">
-              {expertise.map((area) => (
-                <motion.div key={area.title} variants={fadeInUp} transition={transition}>
-                  <Card className="p-6 bg-card border border-border rounded-xl">
-                    <div className="flex items-start gap-4">
-                      <div className="p-2.5 bg-primary/10 rounded-lg">
-                        <area.icon className="w-5 h-5 text-primary" aria-hidden />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-1">{area.title}</h4>
-                        <p className="text-sm text-muted-foreground mb-3">{area.description}</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {area.skills.map((skill) => (
-                            <Badge key={skill} variant="secondary" className="text-xs font-normal bg-muted/80 text-muted-foreground border-0">
-                              {skill}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              ))}
+    <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+      <AnimatedItem>
+        <h3 className="text-xl font-semibold text-foreground mb-4">Who I am</h3>
+        <p className="text-muted-foreground leading-relaxed mb-4">
+          I&apos;m <strong className="text-foreground font-medium">Tuyishime Naome</strong>, a
+          full stack developer based in Rwanda. I work across frontend, backend, mobile, and AI —
+          always with an eye on performance, accessibility, and maintainable code.
+        </p>
+        <p className="text-muted-foreground leading-relaxed mb-6">
+          Whether it&apos;s a government platform, a healthcare app, or an AI agent pipeline, I
+          focus on clarity, collaboration, and delivering value on deadline.
+        </p>
+        <a
+          href={CV_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border font-medium text-sm hover:bg-accent transition-colors"
+        >
+          <Download className="w-4 h-4" aria-hidden />
+          View resume
+        </a>
+      </AnimatedItem>
+
+      <AnimatedGrid className="space-y-4">
+        {expertise.map((area) => (
+          <AnimatedItem key={area.title}>
+            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/25 transition-all duration-300">
+              <div className="flex gap-4">
+                <div className="shrink-0 p-3 rounded-xl bg-primary/10">
+                  <area.icon className="w-5 h-5 text-primary" aria-hidden />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">{area.title}</h4>
+                  <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+                    {area.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {area.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2.5 py-1 text-xs font-medium rounded-md bg-muted text-muted-foreground"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-};
+          </AnimatedItem>
+        ))}
+      </AnimatedGrid>
+    </div>
+  </Section>
+);
 
 export default About;

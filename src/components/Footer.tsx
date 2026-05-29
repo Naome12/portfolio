@@ -1,86 +1,77 @@
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Github, Mail, ArrowUp } from "lucide-react";
+import { Github, Mail, ArrowUp, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useSectionNav } from "@/hooks/use-section-nav";
+import { EMAIL, GITHUB_URL, NAV_ITEMS } from "@/lib/constants";
 
 const Footer = () => {
   const { toast } = useToast();
-  const currentYear = new Date().getFullYear();
-
-  const socialLinks = [
-    { icon: Github, href: "https://github.com/Naome12", label: "GitHub" },
-    { icon: Mail, href: "mailto:tuyishimenaome27@gmail.com", label: "Email", isEmail: true }
-  ];
-
-  const quickLinks = [
-    { label: "About", href: "#about" },
-    { label: "Projects", href: "#projects" },
-    { label: "Skills", href: "#skills" },
-    { label: "Experience", href: "#experience" },
-    { label: "Contact", href: "#contact" }
-  ];
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const scrollToSection = (href: string) => {
-    const element = document.getElementById(href.slice(1));
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  const { go } = useSectionNav();
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-background border-t border-border" aria-label="Footer">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
-            <span>© {currentYear} Tuyishime Naome</span>
-            <nav className="flex gap-6" aria-label="Footer navigation">
-              {quickLinks.map((link) => (
-                <button
-                  key={link.href}
-                  type="button"
-                  onClick={() => scrollToSection(link.href)}
-                  className="hover:text-foreground transition-colors"
-                >
-                  {link.label}
-                </button>
-              ))}
-            </nav>
+    <footer className="border-t border-border bg-background" aria-label="Footer">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-12 sm:py-14">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <div>
+            <p className="font-bold text-lg text-foreground mb-1">
+              Naome<span className="text-primary">.</span>dev
+            </p>
+            <p className="text-sm text-muted-foreground max-w-sm">
+              Full stack developer crafting web, mobile, and AI solutions from Kigali, Rwanda.
+            </p>
           </div>
-          <div className="flex items-center gap-3">
+
+          <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer links">
+            {NAV_ITEMS.filter((i) => i.href !== "#home").map((link) => (
+              <button
+                key={link.href}
+                type="button"
+                onClick={() => go(link.href)}
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                {link.label}
+              </button>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
             <a
-              href="https://github.com/Naome12"
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              className="p-2.5 rounded-xl border border-border hover:bg-accent hover:border-primary/30 transition-colors"
               aria-label="GitHub"
             >
-              <Github size={18} />
+              <Github className="w-4 h-4" />
             </a>
             <button
               type="button"
               onClick={() => {
-                navigator.clipboard.writeText("tuyishimenaome27@gmail.com");
-                toast({ title: "Copied!", description: "Email copied to clipboard." });
+                navigator.clipboard.writeText(EMAIL);
+                toast({ title: "Email copied", description: EMAIL });
               }}
-              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              className="p-2.5 rounded-xl border border-border hover:bg-accent hover:border-primary/30 transition-colors"
               aria-label="Copy email"
             >
-              <Mail size={18} />
+              <Mail className="w-4 h-4" />
             </button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={scrollToTop}
-              className="text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg"
-              aria-label="Scroll to top"
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="p-2.5 rounded-xl border border-border hover:bg-accent hover:border-primary/30 transition-colors"
+              aria-label="Back to top"
             >
-              <ArrowUp size={18} />
-            </Button>
+              <ArrowUp className="w-4 h-4" />
+            </button>
           </div>
+        </div>
+
+        <div className="mt-10 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
+          <p>© {year} Tuyishime Naome. All rights reserved.</p>
+          <p className="inline-flex items-center gap-1">
+            Built with care
+            <Heart className="w-3.5 h-3.5 text-primary fill-primary/30" aria-hidden />
+          </p>
         </div>
       </div>
     </footer>

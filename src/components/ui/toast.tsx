@@ -48,7 +48,7 @@ export function Toast({
       const t = setTimeout(() => onOpenChange?.(false), 300)
       return () => clearTimeout(t)
     }
-  }, [visible])
+  }, [visible, onOpenChange])
 
   React.useEffect(() => {
     const timer = setTimeout(() => setVisible(false), duration)

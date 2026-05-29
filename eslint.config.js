@@ -25,5 +25,14 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-unused-vars": "off",
     },
+  },
+  {
+    // Vendored shadcn/ui primitives and the theme provider intentionally
+    // co-locate components with their variants/hooks. The react-refresh rule
+    // is a dev-only HMR hint and is not worth restructuring these files for.
+    files: ["src/components/ui/**/*.{ts,tsx}", "src/components/ThemeProvider.tsx"],
+    rules: {
+      "react-refresh/only-export-components": "off",
+    },
   }
 );
