@@ -33,7 +33,7 @@ export function AppDialog({ open, onClose, children, ...props }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className={cn("w-full max-w-lg transform overflow-hidden rounded-2xl bg-card text-card-foreground p-6 text-left align-middle shadow-xl transition-all border border-border")}> 
+              <Dialog.Panel className={cn("w-full max-w-2xl transform overflow-hidden rounded-2xl bg-card text-card-foreground p-6 text-left align-middle shadow-xl transition-all border border-border")}>
                 <button
                   type="button"
                   className="absolute right-4 top-4 text-muted-foreground hover:text-foreground rounded-lg p-1 hover:bg-accent transition-colors"

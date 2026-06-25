@@ -1,7 +1,9 @@
-import { Code2, Database, Server, Cpu, Wrench } from "lucide-react";
-import { Section, SectionHeader, AnimatedGrid, AnimatedItem } from "@/components/layout/Section";
+import { Code2, Server, Database, Cpu, Wrench } from "lucide-react";
+import { Section, SectionHeader } from "@/components/layout/Section";
+import { Reveal } from "@/components/primitives/Reveal";
+import { Marquee } from "@/components/primitives/Marquee";
 
-const skillCategories = [
+const categories = [
   {
     title: "Frontend",
     icon: Code2,
@@ -10,17 +12,17 @@ const skillCategories = [
   {
     title: "Backend",
     icon: Server,
-    skills: ["Node.js", "Express", "Python", "FastAPI", "Django", "REST APIs"],
+    skills: ["Node.js", "Express", "Python", "FastAPI", "Django", "REST"],
   },
   {
-    title: "Data & cloud",
+    title: "Data & Cloud",
     icon: Database,
     skills: ["PostgreSQL", "MongoDB", "Docker", "AWS", "Redis"],
   },
   {
     title: "Mobile & AI",
     icon: Cpu,
-    skills: ["React Native", "Expo", "LangChain", "LLMs", "RAG"],
+    skills: ["React Native", "Expo", "Flutter", "LangChain", "RAG", "LLMs"],
   },
   {
     title: "Workflow",
@@ -29,38 +31,78 @@ const skillCategories = [
   },
 ];
 
+const marqueeTech = [
+  "React",
+  "TypeScript",
+  "Next.js",
+  "Node.js",
+  "Python",
+  "FastAPI",
+  "PostgreSQL",
+  "React Native",
+  "Flutter",
+  "LangChain",
+  "Docker",
+  "AWS",
+  "Tailwind",
+  "MongoDB",
+  "Redis",
+  "Git",
+];
+
+const Pill = ({ label }: { label: string }) => (
+  <span className="flex items-center gap-2 whitespace-nowrap rounded-full border border-border bg-card/60 px-4 py-2 font-mono text-sm text-muted-foreground">
+    <span className="h-1.5 w-1.5 rounded-full bg-primary/70" />
+    {label}
+  </span>
+);
+
 const Skills = () => (
-  <Section id="skills">
+  <Section id="skills" variant="muted">
     <SectionHeader
-      label="Skills"
-      title="Tools I use to ship"
-      description="A focused stack for building reliable products — from UI to APIs to deployment."
+      index="02"
+      label="Stack"
+      title="The tools I build with"
+      description="A focused stack for building software that lasts."
     />
 
-    <AnimatedGrid className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-      {skillCategories.map((category) => (
-        <AnimatedItem key={category.title}>
-          <div className="group h-full p-6 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-glow-sm transition-all duration-300">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="p-2.5 rounded-xl bg-primary/10 group-hover:bg-primary/15 transition-colors">
-                <category.icon className="w-5 h-5 text-primary" aria-hidden />
+    <Reveal className="mb-14 space-y-4">
+      <Marquee duration={40}>
+        {marqueeTech.map((t) => (
+          <Pill key={t} label={t} />
+        ))}
+      </Marquee>
+      <Marquee duration={48} reverse>
+        {[...marqueeTech].reverse().map((t) => (
+          <Pill key={t} label={t} />
+        ))}
+      </Marquee>
+    </Reveal>
+
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {categories.map((cat, i) => (
+        <Reveal key={cat.title} delay={i * 0.06}>
+          <div className="group h-full rounded-2xl border border-border bg-card/60 p-6 transition-all duration-300 hover:border-primary/30 hover:bg-card hover:shadow-card">
+            <div className="mb-5 flex items-center gap-3">
+              <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
+                <cat.icon className="h-5 w-5" aria-hidden />
               </div>
-              <h3 className="font-semibold text-foreground">{category.title}</h3>
+              <h3 className="font-display font-semibold text-foreground">{cat.title}</h3>
             </div>
             <div className="flex flex-wrap gap-2">
-              {category.skills.map((skill) => (
+              {cat.skills.map((skill) => (
                 <span
                   key={skill}
-                  className="px-3 py-1.5 text-xs font-medium rounded-lg bg-muted/80 text-muted-foreground"
+                  className="rounded-lg bg-muted px-2.5 py-1 font-mono text-xs text-muted-foreground"
                 >
                   {skill}
                 </span>
               ))}
             </div>
           </div>
-        </AnimatedItem>
+        </Reveal>
       ))}
-    </AnimatedGrid>
+    </div>
   </Section>
 );
 

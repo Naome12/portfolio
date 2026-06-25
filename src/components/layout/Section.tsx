@@ -1,13 +1,11 @@
 import type { ReactNode } from "react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { fadeInUp, defaultViewport, transition } from "@/lib/motion";
+import { Reveal } from "@/components/primitives/Reveal";
 
 type SectionProps = {
   id: string;
   className?: string;
   children: ReactNode;
-  /** alternate band background */
   variant?: "default" | "muted";
 };
 
@@ -16,25 +14,27 @@ export function Section({ id, className, children, variant = "default" }: Sectio
     <section
       id={id}
       className={cn(
-        "scroll-mt-24 py-20 sm:py-24 lg:py-32",
-        variant === "muted" && "bg-muted/40",
+        "relative scroll-mt-24 py-24 sm:py-28 lg:py-36",
+        variant === "muted" && "bg-muted/30",
         className
       )}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">{children}</div>
+      <div className="container mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">{children}</div>
     </section>
   );
 }
 
 type SectionHeaderProps = {
-  label?: string;
-  title: string;
+  index?: string;
+  label: string;
+  title: ReactNode;
   description?: string;
   align?: "center" | "left";
   className?: string;
 };
 
 export function SectionHeader({
+  index,
   label,
   title,
   description,
@@ -42,67 +42,31 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   return (
-    <motion.header
+    <Reveal
       className={cn(
-        "mb-12 sm:mb-16",
-        align === "center" && "text-center max-w-2xl mx-auto",
+        "mb-14 sm:mb-16",
+        align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl",
         className
       )}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={defaultViewport}
-      transition={transition}
     >
-      {label && (
-        <p className="text-sm font-semibold text-primary tracking-wider uppercase mb-3">
-          {label}
-        </p>
-      )}
-      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground font-display tracking-tight">
+      <div
+        className={cn(
+          "mb-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-primary",
+          align === "center" && "justify-center"
+        )}
+      >
+        {index && <span className="text-muted-foreground">{index}</span>}
+        <span className="h-px w-6 bg-primary/50" />
+        <span>{label}</span>
+      </div>
+      <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
+        <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
           {description}
         </p>
       )}
-    </motion.header>
-  );
-}
-
-export function AnimatedGrid({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="visible"
-      viewport={defaultViewport}
-      variants={{
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-export function AnimatedItem({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <motion.div variants={fadeInUp} transition={transition} className={className}>
-      {children}
-    </motion.div>
+    </Reveal>
   );
 }

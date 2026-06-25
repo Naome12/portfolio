@@ -1,22 +1,20 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLocation } from "react-router-dom";
-import { Menu, X, FileText, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, FileText } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { useSectionNav } from "@/hooks/use-section-nav";
-import { NAV_ITEMS, CV_URL } from "@/lib/constants";
+import { NAV_ITEMS, SECTION_IDS, CV_URL } from "@/lib/constants";
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { go, isDesktop } = useSectionNav();
-  const location = useLocation();
-  const activeSection = useActiveSection(NAV_ITEMS.map((i) => i.href.slice(1)));
+  const { go } = useSectionNav();
+  const active = useActiveSection(SECTION_IDS);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -29,99 +27,94 @@ const Navigation = () => {
     };
   }, [mobileOpen]);
 
-  const handleNav = (target: string) => {
-    go(target);
+  const handleNav = (href: string) => {
+    go(href);
     setMobileOpen(false);
   };
 
-  const isItemActive = (item: (typeof NAV_ITEMS)[number]) =>
-    isDesktop
-      ? location.pathname === item.path
-      : activeSection === item.href.slice(1);
-
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 pt-4">
+      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
         <nav
           className={cn(
-            "mx-auto max-w-6xl rounded-2xl transition-all duration-300",
-            scrolled
-              ? "glass shadow-lg shadow-black/5 py-2.5 px-4 sm:px-6"
-              : "bg-transparent py-3 px-2 sm:px-4"
+            "mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl px-3 py-2.5 transition-all duration-300 sm:px-4",
+            scrolled ? "glass shadow-card" : "border border-transparent bg-transparent"
           )}
           aria-label="Main navigation"
         >
-          <div className="flex items-center justify-between gap-4">
+          <button
+            type="button"
+            onClick={() => handleNav("#home")}
+            className="group flex items-center gap-2 pl-1 font-display text-base font-bold tracking-tight"
+          >
+            <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-brand font-mono text-sm text-primary-foreground shadow-glow">
+              N
+            </span>
+            <span className="text-foreground">
+              naome<span className="text-primary">.dev</span>
+            </span>
+          </button>
+
+          <ul className="hidden items-center gap-0.5 lg:flex">
+            {NAV_ITEMS.map((item) => {
+              const id = item.href.slice(1);
+              const isActive = active === id;
+              return (
+                <li key={item.href}>
+                  <button
+                    type="button"
+                    onClick={() => handleNav(item.href)}
+                    aria-current={isActive ? "true" : undefined}
+                    className={cn(
+                      "relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
+                      isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active"
+                        className="absolute inset-0 -z-10 rounded-full bg-primary/10 ring-1 ring-primary/20"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                    {item.label}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="hidden items-center gap-2 lg:flex">
+            <ThemeToggle />
+            <a
+              href={CV_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-3.5 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+            >
+              <FileText className="h-4 w-4" aria-hidden />
+              Resume
+            </a>
             <button
               type="button"
-              onClick={() => handleNav("#home")}
-              className="font-bold text-lg sm:text-xl text-foreground tracking-tight hover:text-primary transition-colors"
+              onClick={() => handleNav("#contact")}
+              className="group inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.97]"
             >
-              Naome<span className="text-primary">.</span>dev
+              Let&apos;s talk
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
             </button>
+          </div>
 
-            <ul className="hidden lg:flex items-center gap-1">
-              {NAV_ITEMS.map((item) => {
-                const isActive = isItemActive(item);
-                return (
-                  <li key={item.href}>
-                    <button
-                      type="button"
-                      onClick={() => handleNav(item.href)}
-                      aria-current={isActive ? "page" : undefined}
-                      className={cn(
-                        "relative px-4 py-2 text-sm font-medium rounded-full transition-colors",
-                        isActive
-                          ? "text-primary"
-                          : "text-muted-foreground hover:text-foreground"
-                      )}
-                    >
-                      {item.label}
-                      {isActive && (
-                        <motion.span
-                          layoutId="nav-pill"
-                          className="absolute inset-0 bg-primary/10 rounded-full -z-10"
-                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                        />
-                      )}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <div className="hidden lg:flex items-center gap-2">
-              <ThemeToggle />
-              <a
-                href={CV_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border border-border hover:bg-accent transition-colors"
-              >
-                <FileText className="w-4 h-4" aria-hidden />
-                Resume
-              </a>
-              <button
-                type="button"
-                onClick={() => handleNav("#contact")}
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
-              >
-                Hire me
-                <ArrowRight className="w-4 h-4" aria-hidden />
-              </button>
-            </div>
-
-            <div className="flex lg:hidden items-center gap-2">
-              <ThemeToggle />
-              <button
-                type="button"
-                onClick={() => setMobileOpen(true)}
-                className="p-2.5 rounded-xl border border-border hover:bg-accent transition-colors"
-                aria-label="Open menu"
-              >
-                <Menu className="w-5 h-5" />
-              </button>
-            </div>
+          <div className="flex items-center gap-1.5 lg:hidden">
+            <ThemeToggle />
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              className="rounded-xl border border-border p-2.5 text-foreground transition-colors hover:bg-accent"
+              aria-label="Open menu"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
           </div>
         </nav>
       </header>
@@ -133,7 +126,7 @@ const Navigation = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[60] bg-background/80 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-[60] bg-background/70 backdrop-blur-sm lg:hidden"
               onClick={() => setMobileOpen(false)}
               aria-hidden
             />
@@ -141,58 +134,67 @@ const Navigation = () => {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 280 }}
-              className="fixed top-0 right-0 bottom-0 z-[70] w-[min(100vw-3rem,320px)] glass border-l border-border p-6 flex flex-col lg:hidden"
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="fixed inset-y-0 right-0 z-[70] flex w-[min(100vw-3rem,340px)] flex-col border-l border-border bg-card p-6 lg:hidden"
             >
-              <div className="flex items-center justify-between mb-8">
-                <span className="font-bold text-lg">Menu</span>
+              <div className="mb-8 flex items-center justify-between">
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  Navigation
+                </span>
                 <button
                   type="button"
                   onClick={() => setMobileOpen(false)}
-                  className="p-2 rounded-xl hover:bg-accent"
+                  className="rounded-xl p-2 hover:bg-accent"
                   aria-label="Close menu"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
-              <ul className="flex flex-col gap-1 flex-1">
-                {NAV_ITEMS.map((item, i) => (
-                  <motion.li
-                    key={item.href}
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => handleNav(item.href)}
-                      className={cn(
-                        "w-full text-left px-4 py-3.5 rounded-xl text-base font-medium transition-colors",
-                        isItemActive(item)
-                          ? "bg-primary/10 text-primary"
-                          : "text-foreground hover:bg-accent"
-                      )}
+              <ul className="flex flex-1 flex-col gap-1">
+                {NAV_ITEMS.map((item, i) => {
+                  const id = item.href.slice(1);
+                  const isActive = active === id;
+                  return (
+                    <motion.li
+                      key={item.href}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.04 * i }}
                     >
-                      {item.label}
-                    </button>
-                  </motion.li>
-                ))}
+                      <button
+                        type="button"
+                        onClick={() => handleNav(item.href)}
+                        className={cn(
+                          "flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-base font-medium transition-colors",
+                          isActive
+                            ? "bg-primary/10 text-primary"
+                            : "text-foreground hover:bg-accent"
+                        )}
+                      >
+                        <span>{item.label}</span>
+                        <span className="font-mono text-xs text-muted-foreground">
+                          0{i + 1}
+                        </span>
+                      </button>
+                    </motion.li>
+                  );
+                })}
               </ul>
-              <div className="space-y-3 pt-6 border-t border-border">
+              <div className="space-y-3 border-t border-border pt-6">
                 <a
                   href={CV_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-border font-medium"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-border py-3 font-medium"
                 >
-                  <FileText className="w-4 h-4" /> Resume
+                  <FileText className="h-4 w-4" /> Resume
                 </a>
                 <button
                   type="button"
                   onClick={() => handleNav("#contact")}
-                  className="w-full py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold"
+                  className="w-full rounded-xl bg-primary py-3.5 font-semibold text-primary-foreground"
                 >
-                  Hire me
+                  Let&apos;s talk
                 </button>
               </div>
             </motion.div>

@@ -20,9 +20,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-				display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-				serif: ['"DM Serif Display"', 'Georgia', 'serif'],
+				sans: ['Inter', 'system-ui', 'sans-serif'],
+				display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+				mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -58,10 +58,11 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				gold: 'hsl(var(--gold))',
-				indigo: 'hsl(var(--indigo))',
-				emerald: 'hsl(var(--emerald))',
-				charcoal: 'hsl(var(--charcoal))',
+				brand: {
+					DEFAULT: 'hsl(var(--brand))',
+					2: 'hsl(var(--brand-2))',
+					3: 'hsl(var(--brand-3))',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -79,7 +80,7 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			backgroundImage: {
-				'gradient-primary': 'linear-gradient(135deg, hsl(var(--gold)), hsl(var(--indigo)))',
+				'gradient-brand': 'linear-gradient(120deg, hsl(var(--brand)), hsl(var(--brand-2)) 55%, hsl(var(--brand-3)))',
 				'gradient-muted': 'linear-gradient(180deg, transparent, hsl(var(--muted) / 0.3))',
 			},
 			keyframes: {
@@ -108,11 +109,6 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.6s ease-out',
-				float: 'float 5s ease-in-out infinite'
-			},
-			boxShadow: {
-				glow: '0 0 40px -10px hsl(var(--primary) / 0.35)',
-				'glow-sm': '0 0 24px -8px hsl(var(--primary) / 0.25)',
 			}
 		}
 	},
