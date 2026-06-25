@@ -1,123 +1,141 @@
-import { Calendar, MapPin, Building, GraduationCap } from "lucide-react";
-import { Section, SectionHeader, AnimatedGrid, AnimatedItem } from "@/components/layout/Section";
+import { MapPin, Briefcase, GraduationCap } from "lucide-react";
+import { Section, SectionHeader } from "@/components/layout/Section";
+import { Reveal } from "@/components/primitives/Reveal";
 
 const experiences = [
+  {
+    title: "Backend Developer · Freelance",
+    company: "EdgeReach",
+    location: "Remote",
+    period: "Feb 2026 – May 2026",
+    points: [
+      "Built and maintained production backend APIs and services.",
+      "Added tests, tuned queries, and strengthened auth and stability.",
+    ],
+    tech: ["Node.js", "TypeScript", "PostgreSQL", "Testing"],
+  },
+  {
+    title: "AI Developer Intern",
+    company: "Land O'clock",
+    location: "Kigali, Rwanda",
+    period: "Sep 2025 – Oct 2025",
+    points: [
+      "Built backend services and data pipelines for AI products.",
+      "Integrated RAG and LLMs, and containerized with Docker.",
+    ],
+    tech: ["Node.js", "Python", "RAG", "LLMs", "Docker"],
+  },
   {
     title: "Software Developer Intern",
     company: "MIGEPROF",
     location: "Kigali, Rwanda",
     period: "Aug 2025 – Nov 2025",
     points: [
-      "Built and maintained government digital services and internal tools.",
-      "Integrated frontend and backend for ministry platforms.",
-      "Contributed to requirements, documentation, and QA.",
+      "Built web apps, dashboards, and reporting tools.",
+      "Cleaned data and supported testing and documentation.",
     ],
-    tech: ["Web Development", "System Integration", "Testing"],
-  },
-  {
-    title: "AI Engineer",
-    company: "LandO'clock",
-    location: "Remote",
-    period: "Sep 2025 – Oct 2025",
-    points: [
-      "Designed AI agents with LangChain, ReAct, RAG, and LLMs.",
-      "Built MCP servers, APIs, and data pipelines for production.",
-    ],
-    tech: ["LangChain", "RAG", "LLMs", "Python", "MCP"],
+    tech: ["React", "Dashboards", "Testing"],
   },
 ];
 
 const education = {
-  degree: "High School Diploma — Science",
+  degree: "Software Programming & Embedded Systems",
   school: "Rwanda Coding Academy",
   location: "Kigali, Rwanda",
-  period: "2022 – 2025",
-  highlights: ["Software programming & embedded systems", "STEM club researcher"],
+  period: "Sep 2022 – Jul 2025",
+  highlights: [
+    "Full-stack & embedded systems foundation",
+    "Speaks Kinyarwanda, English, French & Swahili",
+  ],
 };
 
 const Experience = () => (
-  <Section id="experience">
+  <Section id="experience" variant="muted">
     <SectionHeader
+      index="04"
       label="Experience"
       title="Where I've grown"
-      description="Hands-on roles in government tech, AI engineering, and a strong foundation in software at Rwanda Coding Academy."
+      description="A short path through backend, AI, and government tech."
     />
 
-    <div className="grid lg:grid-cols-5 gap-10 lg:gap-12">
-      <div className="lg:col-span-3 space-y-6">
-        <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
-          <Building className="w-5 h-5 text-primary" aria-hidden />
-          Experience
+    <div className="grid gap-12 lg:grid-cols-5 lg:gap-12">
+      {/* Timeline */}
+      <div className="lg:col-span-3">
+        <h3 className="mb-6 flex items-center gap-2 font-display text-lg font-semibold text-foreground">
+          <Briefcase className="h-5 w-5 text-primary" aria-hidden />
+          Work
         </h3>
-        <AnimatedGrid className="space-y-5">
-          {experiences.map((exp) => (
-            <AnimatedItem key={exp.company + exp.period}>
-              <div className="relative pl-6 sm:pl-8 border-l-2 border-primary/30">
-                <span className="absolute left-0 top-1.5 -translate-x-1/2 w-3 h-3 rounded-full bg-primary ring-4 ring-background" />
-                <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/25 transition-colors">
-                  <h4 className="text-lg font-semibold text-foreground">{exp.title}</h4>
-                  <p className="text-primary font-medium mt-0.5">{exp.company}</p>
-                  <div className="flex flex-wrap gap-3 mt-2 text-sm text-muted-foreground">
-                    <span className="inline-flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5" aria-hidden />
-                      {exp.period}
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5" aria-hidden />
-                      {exp.location}
-                    </span>
+        <div className="relative space-y-5 pl-7 before:absolute before:left-[7px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-border">
+          {experiences.map((exp, i) => (
+            <Reveal key={exp.company} delay={i * 0.1}>
+              <div className="relative">
+                <span className="absolute -left-7 top-2 grid h-3.5 w-3.5 place-items-center rounded-full bg-primary ring-4 ring-background">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary-foreground" />
+                </span>
+                <div className="rounded-2xl border border-border bg-card/60 p-5 transition-colors hover:border-primary/30 sm:p-6">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                    <h4 className="font-display text-lg font-semibold text-foreground">
+                      {exp.title}
+                    </h4>
+                    <span className="font-mono text-xs text-muted-foreground">{exp.period}</span>
                   </div>
+                  <p className="mt-0.5 flex items-center gap-2 text-sm font-medium text-primary">
+                    {exp.company}
+                    <span className="inline-flex items-center gap-1 text-xs font-normal text-muted-foreground">
+                      <MapPin className="h-3 w-3" aria-hidden /> {exp.location}
+                    </span>
+                  </p>
                   <ul className="mt-4 space-y-2">
                     {exp.points.map((p) => (
-                      <li key={p} className="text-sm text-muted-foreground flex gap-2">
-                        <span className="text-primary mt-1.5">•</span>
+                      <li key={p} className="flex gap-2.5 text-sm text-muted-foreground">
+                        <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
                         {p}
                       </li>
                     ))}
                   </ul>
-                  <div className="flex flex-wrap gap-2 mt-4">
+                  <div className="mt-4 flex flex-wrap gap-2">
                     {exp.tech.map((t) => (
-                      <span key={t} className="px-2.5 py-1 text-xs rounded-md bg-muted text-muted-foreground">
+                      <span
+                        key={t}
+                        className="rounded-md bg-muted px-2.5 py-1 font-mono text-[11px] text-muted-foreground"
+                      >
                         {t}
                       </span>
                     ))}
                   </div>
                 </div>
               </div>
-            </AnimatedItem>
+            </Reveal>
           ))}
-        </AnimatedGrid>
+        </div>
       </div>
 
+      {/* Education */}
       <div className="lg:col-span-2">
-        <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground mb-6">
-          <GraduationCap className="w-5 h-5 text-primary" aria-hidden />
+        <h3 className="mb-6 flex items-center gap-2 font-display text-lg font-semibold text-foreground">
+          <GraduationCap className="h-5 w-5 text-primary" aria-hidden />
           Education
         </h3>
-        <AnimatedItem>
-          <div className="p-6 sm:p-8 rounded-2xl bg-card border border-border h-full">
-            <h4 className="text-xl font-semibold text-foreground">{education.degree}</h4>
-            <p className="text-primary font-medium mt-1">{education.school}</p>
-            <div className="flex flex-wrap gap-3 mt-3 text-sm text-muted-foreground">
-              <span className="inline-flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5" aria-hidden />
-                {education.period}
-              </span>
-              <span className="inline-flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5" aria-hidden />
-                {education.location}
-              </span>
-            </div>
-            <ul className="mt-5 space-y-2">
+        <Reveal>
+          <div className="rounded-2xl border border-border bg-card/60 p-6 sm:p-7">
+            <span className="font-mono text-xs text-muted-foreground">{education.period}</span>
+            <h4 className="mt-2 font-display text-xl font-semibold text-foreground">
+              {education.degree}
+            </h4>
+            <p className="mt-1 text-sm font-medium text-primary">{education.school}</p>
+            <p className="mt-1 inline-flex items-center gap-1 text-xs text-muted-foreground">
+              <MapPin className="h-3 w-3" aria-hidden /> {education.location}
+            </p>
+            <ul className="mt-5 space-y-2 border-t border-border/70 pt-5">
               {education.highlights.map((h) => (
-                <li key={h} className="text-sm text-muted-foreground flex gap-2">
-                  <span className="text-primary">•</span>
+                <li key={h} className="flex gap-2.5 text-sm text-muted-foreground">
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
                   {h}
                 </li>
               ))}
             </ul>
           </div>
-        </AnimatedItem>
+        </Reveal>
       </div>
     </div>
   </Section>

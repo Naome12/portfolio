@@ -1,101 +1,97 @@
-import { Code, Smartphone, Award, Download } from "lucide-react";
-import { Section, SectionHeader, AnimatedGrid, AnimatedItem } from "@/components/layout/Section";
-import { CV_URL } from "@/lib/constants";
+import { Code2, Smartphone, BrainCircuit } from "lucide-react";
+import { Section, SectionHeader } from "@/components/layout/Section";
+import { Reveal } from "@/components/primitives/Reveal";
+import { useCountUp } from "@/hooks/use-count-up";
 
 const stats = [
-  { icon: Code, label: "Projects shipped", value: "15+" },
-  { icon: Award, label: "Years building", value: "3+" },
+  { value: 15, suffix: "+", label: "Projects shipped" },
+  { value: 3, suffix: "+", label: "Years building" },
+  { value: 20, suffix: "+", label: "Technologies" },
+  { value: 100, suffix: "%", label: "Commitment" },
 ];
 
-const expertise = [
+const focus = [
   {
-    icon: Code,
-    title: "Full stack engineering",
-    description:
-      "End-to-end web apps with React, Node.js, Python, and PostgreSQL — from API design to polished UI.",
-    skills: ["React", "TypeScript", "Node.js", "Python", "FastAPI", "PostgreSQL"],
+    icon: Code2,
+    title: "Full-stack engineering",
+    description: "Web apps end to end — React, Node, Python, and clean, well-tested APIs.",
   },
   {
     icon: Smartphone,
-    title: "Mobile & intelligent systems",
-    description:
-      "Cross-platform apps with React Native and production AI features using LangChain, RAG, and voice APIs.",
-    skills: ["React Native", "Expo", "LangChain", "LLMs", "RAG"],
+    title: "Mobile development",
+    description: "Cross-platform apps with React Native that feel native and inclusive.",
+  },
+  {
+    icon: BrainCircuit,
+    title: "Applied AI",
+    description: "AI agents and RAG pipelines with LangChain — intelligence that ships.",
   },
 ];
 
+function Stat({ value, suffix, label }: (typeof stats)[number]) {
+  const { value: n, ref } = useCountUp(value);
+  return (
+    <div className="rounded-2xl border border-border bg-card/60 p-5 text-center transition-colors hover:border-primary/30">
+      <p className="font-display text-3xl font-bold text-foreground sm:text-4xl">
+        <span ref={ref}>{n}</span>
+        <span className="text-primary">{suffix}</span>
+      </p>
+      <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{label}</p>
+    </div>
+  );
+}
+
 const About = () => (
-  <Section id="about" variant="muted">
+  <Section id="about">
     <SectionHeader
+      index="01"
       label="About"
-      title="Building software that matters"
-      description="I'm a developer who cares about clean architecture, thoughtful UX, and shipping work that holds up in the real world."
+      align="left"
+      title={
+        <>
+          Engineering software that <span className="text-gradient">holds up</span> in the
+          real world.
+        </>
+      }
     />
 
-    <AnimatedGrid className="grid sm:grid-cols-2 gap-4 max-w-lg mx-auto mb-14">
-      {stats.map((stat) => (
-        <AnimatedItem key={stat.label}>
-          <div className="p-6 rounded-2xl bg-card border border-border text-center hover:border-primary/30 hover:shadow-glow-sm transition-all duration-300">
-            <stat.icon className="w-7 h-7 text-primary mx-auto mb-3" aria-hidden />
-            <p className="text-3xl font-bold text-foreground">{stat.value}</p>
-            <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
-          </div>
-        </AnimatedItem>
-      ))}
-    </AnimatedGrid>
+    <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <Reveal className="order-2 lg:order-1">
+        <div className="space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p>
+            I&apos;m a full-stack developer and AI engineer in Kigali, Rwanda. I build
+            intelligent systems, clean APIs, and the small details that make software feel
+            right.
+          </p>
+          <p>
+            I test before I trust it — I&apos;d rather find what breaks than ship and hope.
+          </p>
+        </div>
 
-    <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-      <AnimatedItem>
-        <h3 className="text-xl font-semibold text-foreground mb-4">Who I am</h3>
-        <p className="text-muted-foreground leading-relaxed mb-4">
-          I&apos;m <strong className="text-foreground font-medium">Tuyishime Naome</strong>, a
-          full stack developer based in Rwanda. I work across frontend, backend, mobile, and AI —
-          always with an eye on performance, accessibility, and maintainable code.
-        </p>
-        <p className="text-muted-foreground leading-relaxed mb-6">
-          Whether it&apos;s a government platform, a healthcare app, or an AI agent pipeline, I
-          focus on clarity, collaboration, and delivering value on deadline.
-        </p>
-        <a
-          href={CV_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border font-medium text-sm hover:bg-accent transition-colors"
-        >
-          <Download className="w-4 h-4" aria-hidden />
-          View resume
-        </a>
-      </AnimatedItem>
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
+          {stats.map((s) => (
+            <Stat key={s.label} {...s} />
+          ))}
+        </div>
+      </Reveal>
 
-      <AnimatedGrid className="space-y-4">
-        {expertise.map((area) => (
-          <AnimatedItem key={area.title}>
-            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/25 transition-all duration-300">
-              <div className="flex gap-4">
-                <div className="shrink-0 p-3 rounded-xl bg-primary/10">
-                  <area.icon className="w-5 h-5 text-primary" aria-hidden />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">{area.title}</h4>
-                  <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-                    {area.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {area.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-2.5 py-1 text-xs font-medium rounded-md bg-muted text-muted-foreground"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+      <div className="order-1 space-y-4 lg:order-2">
+        {focus.map((f, i) => (
+          <Reveal key={f.title} delay={i * 0.08}>
+            <div className="group flex gap-4 rounded-2xl border border-border bg-card/60 p-5 transition-all duration-300 hover:border-primary/30 hover:bg-card sm:p-6">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
+                <f.icon className="h-5 w-5" aria-hidden />
+              </div>
+              <div>
+                <h3 className="font-display font-semibold text-foreground">{f.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  {f.description}
+                </p>
               </div>
             </div>
-          </AnimatedItem>
+          </Reveal>
         ))}
-      </AnimatedGrid>
+      </div>
     </div>
   </Section>
 );

@@ -1,29 +1,27 @@
-import type { Variants } from "framer-motion";
+import type { Variants, Transition } from "framer-motion";
 
-export const defaultViewport = { once: true, amount: 0.2, margin: "0px 0px -80px 0px" };
+export const EASE = [0.22, 1, 0.36, 1] as const;
+
+export const transition: Transition = { duration: 0.6, ease: EASE };
+
+export const defaultViewport = { once: true, amount: 0.25, margin: "0px 0px -80px 0px" };
 
 export const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition },
 };
 
 export const fadeIn: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1 },
+  visible: { opacity: 1, transition },
 };
 
-export const staggerContainer: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-  },
+export const scaleIn: Variants = {
+  hidden: { opacity: 0, scale: 0.96 },
+  visible: { opacity: 1, scale: 1, transition },
 };
 
-export const scaleOnHover = {
-  rest: { scale: 1 },
-  hover: { scale: 1.02 },
-  tap: { scale: 0.98 },
-};
-
-export const transition = { type: "easeOut" as const, duration: 0.4 };
+export const staggerContainer = (stagger = 0.08, delay = 0): Variants => ({
+  hidden: {},
+  visible: { transition: { staggerChildren: stagger, delayChildren: delay } },
+});

@@ -6,15 +6,15 @@ export const GITHUB_URL = "https://github.com/Naome12";
 export const PORTFOLIO_URL = "https://naome-portfolio.vercel.app";
 
 export const NAV_ITEMS = [
-  { label: "Home", href: "#home", path: "/" },
-  { label: "About", href: "#about", path: "/about" },
-  { label: "Skills", href: "#skills", path: "/skills" },
-  { label: "Projects", href: "#projects", path: "/projects" },
-  { label: "Experience", href: "#experience", path: "/experience" },
-  { label: "Contact", href: "#contact", path: "/contact" },
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Stack", href: "#skills" },
+  { label: "Work", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  { label: "Contact", href: "#contact" },
 ] as const;
 
 export const SECTION_IDS = NAV_ITEMS.map((n) => n.href.slice(1));
 
-/** Breakpoint (px) at/above which the site behaves as multi-page (matches Tailwind `lg`). */
+/** Breakpoint (px) at/above which pointer-driven 3D effects are enabled. */
 export const DESKTOP_BREAKPOINT = 1024;
